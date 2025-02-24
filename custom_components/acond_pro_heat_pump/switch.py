@@ -18,7 +18,7 @@ if TYPE_CHECKING:
 ENTITY_DESCRIPTIONS = (
     SwitchEntityDescription(
         key="acond_pro_heat_pump",
-        name="Integration Switch",
+        name="Integration Switch TEST",
         icon="mdi:format-quote-close",
     ),
 )
