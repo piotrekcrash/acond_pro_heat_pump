@@ -1,4 +1,4 @@
-"""DataUpdateCoordinator for integration_blueprint."""
+"""DataUpdateCoordinator for acond_pro_heat_pump."""
 
 from __future__ import annotations
 

@@ -1,5 +1,5 @@
 {
-    "name": "ludeeus/integration_blueprint",
+    "name": "ludeeus/acond_pro_heat_pump",
     "image": "mcr.microsoft.com/devcontainers/python:3.13",
     "postCreateCommand": "scripts/setup",
     "forwardPorts": [

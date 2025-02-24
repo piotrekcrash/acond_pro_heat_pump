@@ -1,4 +1,4 @@
-"""Binary sensor platform for integration_blueprint."""
+"""Binary sensor platform for acond_pro_heat_pump."""
 
 from __future__ import annotations
 
@@ -21,8 +21,8 @@ if TYPE_CHECKING:
 
 ENTITY_DESCRIPTIONS = (
     BinarySensorEntityDescription(
-        key="integration_blueprint",
-        name="Integration Blueprint Binary Sensor",
+        key="acond_pro_heat_pump",
+        name="Acond Pro Heat Pump Binary Sensor",
         device_class=BinarySensorDeviceClass.CONNECTIVITY,
     ),
 )
@@ -44,7 +44,7 @@ async def async_setup_entry(
 
 
 class IntegrationBlueprintBinarySensor(IntegrationBlueprintEntity, BinarySensorEntity):
-    """integration_blueprint binary_sensor class."""
+    """acond_pro_heat_pump binary_sensor class."""
 
     def __init__(
         self,
