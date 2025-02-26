@@ -18,7 +18,12 @@ if TYPE_CHECKING:
 ENTITY_DESCRIPTIONS = (
     SensorEntityDescription(
         key="acond_pro_heat_pump",
-        name="Integration Sensor",
+        name="Integration Sensor 1",
+        icon="mdi:format-quote-close",
+    ),
+    SensorEntityDescription(
+        key="acond_pro_heat_pump",
+        name="Integration Sensor 2",
         icon="mdi:format-quote-close",
     ),
 )
