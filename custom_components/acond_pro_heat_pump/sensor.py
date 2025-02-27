@@ -15,6 +15,8 @@ if TYPE_CHECKING:
     from .coordinator import AcondDataUpdateCoordinator
     from .data import AcondProConfigEntry
 
+prop1 = 'asdasdas'
+
 ENTITY_DESCRIPTIONS = (
     SensorEntityDescription(
         key="acond_pro_heat_pump1",
@@ -37,6 +39,7 @@ async def async_setup_entry(
     """Set up the sensor platform."""
     async_add_entities(
         AcondProSensor(
+            entity_description.key,
             coordinator=entry.runtime_data.coordinator,
             entity_description=entity_description,
         )
@@ -51,11 +54,11 @@ class AcondProSensor(AcondProEntity, SensorEntity):
         self,
         coordinator: AcondDataUpdateCoordinator,
         entity_description: SensorEntityDescription,
+        name
     ) -> None:
         """Initialize the sensor class."""
         super().__init__(coordinator)
         self.entity_description = entity_description
-        self._attr_unique_id = entity_description.key
 
     @property
     def native_value(self) -> str | None:
