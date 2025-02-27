@@ -15,7 +15,6 @@ if TYPE_CHECKING:
     from .coordinator import AcondDataUpdateCoordinator
     from .data import AcondProConfigEntry
 
-prop1 = 'asdasdas'
 
 ENTITY_DESCRIPTIONS = (
     SensorEntityDescription(
@@ -54,13 +53,14 @@ class AcondProSensor(AcondProEntity, SensorEntity):
         self,
         coordinator: AcondDataUpdateCoordinator,
         entity_description: SensorEntityDescription,
-        name
+        name: str
     ) -> None:
         """Initialize the sensor class."""
         super().__init__(coordinator)
         self.entity_description = entity_description
+        self.name = name
 
     @property
-    def native_value(self) -> str | None:
+    def native_value(self, name) -> str | None:
         """Return the native value of the sensor."""
-        return self.coordinator.data.get("body")
+        return self.coordinator.data.get(name)
