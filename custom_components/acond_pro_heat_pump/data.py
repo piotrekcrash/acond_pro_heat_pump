@@ -10,7 +10,7 @@ if TYPE_CHECKING:
     from homeassistant.loader import Integration
 
     from .api import AcondProApiClient
-    from .coordinator import BlueprintDataUpdateCoordinator
+    from .coordinator import AcondDataUpdateCoordinator
 
 
 type AcondProConfigEntry = ConfigEntry[AcondProData]
@@ -18,8 +18,8 @@ type AcondProConfigEntry = ConfigEntry[AcondProData]
 
 @dataclass
 class AcondProData:
-    """Data for the Blueprint integration."""
+    """Data for the Acond integration."""
 
     client: AcondProApiClient
-    coordinator: BlueprintDataUpdateCoordinator
+    coordinator: AcondDataUpdateCoordinator
     integration: Integration

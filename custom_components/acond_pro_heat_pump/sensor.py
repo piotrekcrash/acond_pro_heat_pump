@@ -12,17 +12,17 @@ if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
     from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-    from .coordinator import BlueprintDataUpdateCoordinator
+    from .coordinator import AcondDataUpdateCoordinator
     from .data import AcondProConfigEntry
 
 ENTITY_DESCRIPTIONS = (
     SensorEntityDescription(
-        key="acond_pro_heat_pump",
+        key="acond_pro_heat_pump1",
         name="Integration Sensor 1",
         icon="mdi:format-quote-close",
     ),
     SensorEntityDescription(
-        key="acond_pro_heat_pump",
+        key="acond_pro_heat_pump2",
         name="Integration Sensor 2",
         icon="mdi:format-quote-close",
     ),
@@ -49,12 +49,13 @@ class AcondProSensor(AcondProEntity, SensorEntity):
 
     def __init__(
         self,
-        coordinator: BlueprintDataUpdateCoordinator,
+        coordinator: AcondDataUpdateCoordinator,
         entity_description: SensorEntityDescription,
     ) -> None:
         """Initialize the sensor class."""
         super().__init__(coordinator)
         self.entity_description = entity_description
+        self._attr_unique_id = entity_description.key
 
     @property
     def native_value(self) -> str | None:
