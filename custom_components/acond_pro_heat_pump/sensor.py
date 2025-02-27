@@ -59,6 +59,6 @@ class AcondProSensor(AcondProEntity, SensorEntity):
         self._attr_unique_id = entity_description.key
 
     @property
-    def native_value(self, name) -> str | None:
+    def native_value(self) -> str | None:
         """Return the native value of the sensor."""
         return self.coordinator.data.get(self.entity_description.key)
