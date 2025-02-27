@@ -18,12 +18,12 @@ if TYPE_CHECKING:
 
 ENTITY_DESCRIPTIONS = (
     SensorEntityDescription(
-        key="acond_pro_heat_pump1",
+        key="body",
         name="Integration Sensor 1",
         icon="mdi:format-quote-close",
     ),
     SensorEntityDescription(
-        key="acond_pro_heat_pump2",
+        key="title",
         name="Integration Sensor 2",
         icon="mdi:format-quote-close",
     ),
@@ -38,7 +38,6 @@ async def async_setup_entry(
     """Set up the sensor platform."""
     async_add_entities(
         AcondProSensor(
-            entity_description.key,
             coordinator=entry.runtime_data.coordinator,
             entity_description=entity_description,
         )
@@ -53,14 +52,12 @@ class AcondProSensor(AcondProEntity, SensorEntity):
         self,
         coordinator: AcondDataUpdateCoordinator,
         entity_description: SensorEntityDescription,
-        name: str
     ) -> None:
         """Initialize the sensor class."""
         super().__init__(coordinator)
         self.entity_description = entity_description
-        self.name = name
 
     @property
     def native_value(self, name) -> str | None:
         """Return the native value of the sensor."""
-        return self.coordinator.data.get(name)
+        return self.coordinator.data.get(self.entity_description.key)
