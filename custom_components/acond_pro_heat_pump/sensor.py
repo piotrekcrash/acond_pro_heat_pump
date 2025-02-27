@@ -56,6 +56,7 @@ class AcondProSensor(AcondProEntity, SensorEntity):
         """Initialize the sensor class."""
         super().__init__(coordinator)
         self.entity_description = entity_description
+        self._attr_unique_id = entity_description.key
 
     @property
     def native_value(self, name) -> str | None:
