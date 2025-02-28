@@ -136,7 +136,7 @@ class AcondProApiClient:
                     json=data,
                 )
                 _verify_response_or_raise(response)
-                return await response
+                return response
 
         except TimeoutError as exception:
             msg = f"Timeout error fetching information - {exception}"
