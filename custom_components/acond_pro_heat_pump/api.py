@@ -107,12 +107,12 @@ class AcondProApiClient:
     async def login(self) -> Any:
         """Get data from the API."""
         login_url = "https://" + self._ip_address + URL_LOGIN
-        response: aiohttp.ClientResponse = self._api_txt_wrapper(
+        response = await self._api_txt_wrapper(
             method="get",
             url=login_url,
         )
         if response.status in (302):
-            resp =  self._api_txt_wrapper(
+            resp = await self._api_txt_wrapper(
             method="get",
             url=login_url,
         )
