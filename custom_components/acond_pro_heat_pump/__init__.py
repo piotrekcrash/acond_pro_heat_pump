@@ -48,7 +48,7 @@ async def async_setup_entry(
             ip_address=entry.data[CONF_IP_ADDRESS],
             username=entry.data[CONF_USERNAME],
             password=entry.data[CONF_PASSWORD],
-            session=async_get_clientsession(hass),
+            session=async_get_clientsession(hass, verify_ssl=False),
         ),
         integration=async_get_loaded_integration(hass, entry.domain),
         coordinator=coordinator,
