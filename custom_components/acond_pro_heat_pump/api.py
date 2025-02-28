@@ -8,6 +8,8 @@ from typing import Any
 import aiohttp
 import async_timeout
 
+from .const import URL_LOGIN
+
 
 class AcondProApiClientError(Exception):
     """Exception to indicate a general API error."""
@@ -85,6 +87,54 @@ class AcondProApiClient:
                 )
                 _verify_response_or_raise(response)
                 return await response.json()
+
+        except TimeoutError as exception:
+            msg = f"Timeout error fetching information - {exception}"
+            raise AcondProApiClientCommunicationError(
+                msg,
+            ) from exception
+        except (aiohttp.ClientError, socket.gaierror) as exception:
+            msg = f"Error fetching information - {exception}"
+            raise AcondProApiClientCommunicationError(
+                msg,
+            ) from exception
+        except Exception as exception:  # pylint: disable=broad-except
+            msg = f"Something really wrong happened! - {exception}"
+            raise AcondProApiClientError(
+                msg,
+            ) from exception
+    
+    async def login(self) -> Any:
+        """Get data from the API."""
+        response = await self._api_wrapper(
+            method="get",
+            url="https://" + self._ip_address + URL_LOGIN,
+        )
+        if response.status in (302):
+            msg = "Location found"
+        raise AcondProApiClientAuthenticationError(
+            msg,
+        )
+
+        
+    async def _api_txt_wrapper(
+        self,
+        method: str,
+        url: str,
+        data: dict | None = None,
+        headers: dict | None = None,
+    ) -> Any:
+        """Get information from the API."""
+        try:
+            async with async_timeout.timeout(10):
+                response = await self._session.request(
+                    method=method,
+                    url=url,
+                    headers=headers,
+                    json=data,
+                )
+                _verify_response_or_raise(response)
+                return await response
 
         except TimeoutError as exception:
             msg = f"Timeout error fetching information - {exception}"

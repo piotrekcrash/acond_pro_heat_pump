@@ -96,4 +96,4 @@ class AcondFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             password=password,
             session=async_create_clientsession(self.hass),
         )
-        await client.async_get_data()
+        await client.login()
