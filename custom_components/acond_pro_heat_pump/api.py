@@ -106,7 +106,7 @@ class AcondProApiClient:
     
     async def login(self) -> Any:
         """Get data from the API."""
-        response = await self._api_wrapper(
+        response = await self._api_txt_wrapper(
             method="get",
             url="https://" + self._ip_address + URL_LOGIN,
         )
