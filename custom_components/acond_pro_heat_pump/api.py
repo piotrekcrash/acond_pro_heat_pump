@@ -112,7 +112,7 @@ class AcondProApiClient:
             url=login_url,
         )
         if response.status in (302):
-            await self._api_txt_wrapper(
+            resp =  self._api_txt_wrapper(
             method="get",
             url=login_url,
         )
@@ -136,7 +136,7 @@ class AcondProApiClient:
                     json=data,
                 )
                 _verify_response_or_raise(response)
-                return response
+                return await response
 
         except TimeoutError as exception:
             msg = f"Timeout error fetching information - {exception}"
