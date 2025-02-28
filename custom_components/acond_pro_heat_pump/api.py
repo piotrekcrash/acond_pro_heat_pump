@@ -40,11 +40,13 @@ class AcondProApiClient:
 
     def __init__(
         self,
+        ip_address: str,
         username: str,
         password: str,
         session: aiohttp.ClientSession,
     ) -> None:
         """Sample API Client."""
+        self._ip_address = ip_address
         self._username = username
         self._password = password
         self._session = session

@@ -5,7 +5,8 @@
                 "description": "If you need help with the configuration have a look here: https://github.com/ludeeus/acond_pro_heat_pump",
                 "data": {
                     "username": "Username",
-                    "password": "Password"
+                    "password": "Password",
+                    "ip_address": "IP Address"
                 }
             }
         },
