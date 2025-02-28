@@ -125,7 +125,7 @@ class AcondProApiClient:
         url: str,
         data: dict | None = None,
         headers: dict | None = None,
-    ) -> Any:
+    ) -> aiohttp.ClientResponse:
         """Get information from the API."""
         try:
             async with async_timeout.timeout(10):
