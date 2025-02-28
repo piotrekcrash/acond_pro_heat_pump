@@ -38,7 +38,7 @@ class AcondDataUpdateCoordinator(DataUpdateCoordinator):
             raise ConfigEntryAuthFailed(exception) from exception
         except AcondProApiClientError as exception:
             raise UpdateFailed(exception) from exception
-        
+
 class MyApiCoordinator(DataUpdateCoordinator):
     def __init__(self, hass):
         super().__init__(
