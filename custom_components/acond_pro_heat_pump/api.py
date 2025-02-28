@@ -106,15 +106,17 @@ class AcondProApiClient:
     
     async def login(self) -> Any:
         """Get data from the API."""
+        login_url = "https://" + self._ip_address + URL_LOGIN
         response = await self._api_txt_wrapper(
             method="get",
-            url="https://" + self._ip_address + URL_LOGIN,
+            url=login_url,
         )
         if response.status in (302):
-            msg = "Location found"
-        raise AcondProApiClientAuthenticationError(
-            msg,
+            await self._api_txt_wrapper(
+            method="get",
+            url=login_url,
         )
+        
 
         
     async def _api_txt_wrapper(
