@@ -5,12 +5,12 @@ from __future__ import annotations
 import socket
 from typing import Any
 
+from .const import LOGGER
+
 import aiohttp
 import async_timeout
 from aiohttp import FormData
-import logging
 
-_LOGGER = logging.getLogger(__name__)
 
 from .const import URL_LOGIN, URL_HOME
 
@@ -155,6 +155,7 @@ class AcondProApiClient:
                     headers=headers,
                     json=data,
                 )
+                LOGGER.error(response)
                 #  content_type='application/x-www-form-urlencoded'
                 data = FormData(quote_fields=True, charset='utf-8')
                 data.add_field('USER', self._username)
@@ -166,6 +167,7 @@ class AcondProApiClient:
                     headers=headers,
                     data=data,
                 )
+                LOGGER.error(response)
                 return await response.text()
                 if response.status == 200:
                     response = await self._session.request(
