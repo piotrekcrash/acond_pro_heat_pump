@@ -138,18 +138,16 @@ class AcondProApiClient:
                     headers=headers,
                     json=data,
                 )
-                _LOGGER.error('A')
-                if(response.status == 200):
-                    return await response.text()
-                if response.status is 302:
+                # if(response.status == 200):
+                #     return await response.text()
+                if response.status == 302:
                     response = await self._session.request(
                     method='get',
                     url="https://" + self._ip_address + response.headers.location,
                     headers=headers,
 
                 ) 
-                _LOGGER.error('A')
-                if response.headers.location == URL_LOGIN:
+                # if response.headers.location == URL_LOGIN:
                     data = FormData(quote_fields=True, charset='utf-8')
                     content_type= 'application/x-www-form-urlencoded'
                     data.add_field('USER', self._username, content_type='application/x-www-form-urlencoded')
@@ -160,7 +158,6 @@ class AcondProApiClient:
                     headers=headers,
                     data=data,
                 )
-                _LOGGER.error('A')
                 if response.status == 200:
                     response = await self._session.request(
                     method=method,
@@ -168,7 +165,6 @@ class AcondProApiClient:
                     headers=headers,
                     json=data,
                 )
-                _LOGGER.error('A')
                 return await response.text()
 
         except TimeoutError as exception:
