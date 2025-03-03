@@ -149,15 +149,12 @@ class AcondProApiClient:
 
                 ) """
                 # if response.headers.location == URL_LOGIN:
-
-                response = await self._session.request(
+                """response = await self._session.request(
                     method='get',
                     url="https://" + self._ip_address + URL_LOGIN,
                     headers=headers,
                     json=data,
-                )
-                LOGGER.error('GET')
-                LOGGER.error(response)
+                )"""
                 #  content_type='application/x-www-form-urlencoded'
                 data = FormData(quote_fields=True, charset='utf-8')
                 data.add_field('USER', self._username)
@@ -169,7 +166,15 @@ class AcondProApiClient:
                     headers=headers,
                     data=data,
                 )
-                LOGGER.error('POST')
+                LOGGER.error('POST1')
+                LOGGER.error(response)
+                response = await self._session.request(
+                    method='post',
+                    url="https://" + self._ip_address + URL_LOGIN,
+                    headers=headers,
+                    data=data,
+                )
+                LOGGER.error('POST2')
                 LOGGER.error(response)
 
                 return await response.text()

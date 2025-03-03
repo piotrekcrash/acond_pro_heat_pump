@@ -10,6 +10,7 @@ from __future__ import annotations
 from datetime import timedelta
 from typing import TYPE_CHECKING
 import aiohttp
+import ssl
 
 from homeassistant.const import CONF_IP_ADDRESS, CONF_PASSWORD, CONF_USERNAME, Platform
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
@@ -31,6 +32,10 @@ PLATFORMS: list[Platform] = [
     Platform.SWITCH,
 ]
 
+ssl_context = ssl.create_default_context()
+ssl_context.check_hostname = False
+ssl_context.verify_mode = ssl.CERT_NONE
+
 
 # https://developers.home-assistant.io/docs/config_entries_index/#setting-up-an-entry
 async def async_setup_entry(
@@ -45,12 +50,13 @@ async def async_setup_entry(
         update_interval=timedelta(hours=1),
     )
     jar = aiohttp.CookieJar(unsafe=True)
+    connector=aiohttp.TCPConnector(ssl=ssl_context)
     entry.runtime_data = AcondProData(
         client=AcondProApiClient(
             ip_address=entry.data[CONF_IP_ADDRESS],
             username=entry.data[CONF_USERNAME],
             password=entry.data[CONF_PASSWORD],
-            session=async_create_clientsession(hass, verify_ssl=False, cookie_jar=jar),
+            session=async_create_clientsession(hass, verify_ssl=False, cookie_jar=jar, connector=connector),
         ),
         integration=async_get_loaded_integration(hass, entry.domain),
         coordinator=coordinator,
