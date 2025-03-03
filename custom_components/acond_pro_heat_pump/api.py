@@ -69,6 +69,12 @@ class AcondProApiClient:
             data={"title": value},
             headers={"Content-type": "application/json; charset=UTF-8"},
         )
+    
+    async def async_get_home(self) -> Any:
+        return await self._api_txt_wrapper(
+            method="get",
+            url="https://" + self._ip_address + URL_HOME,
+        )
 
     async def _api_wrapper(
         self,
@@ -129,7 +135,7 @@ class AcondProApiClient:
                     headers=headers,
                     json=data,
                 )
-                if(response.status is 200):
+                if(response.status == 200):
                     return await response.text()
                 if response.status is 302:
                     response = await self._session.request(
@@ -148,7 +154,7 @@ class AcondProApiClient:
                     headers=headers,
                     data=data,
                 )
-                if response.status is 200:
+                if response.status == 200:
                     response = await self._session.request(
                     method=method,
                     url=url,

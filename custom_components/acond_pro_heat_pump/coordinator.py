@@ -33,7 +33,7 @@ class AcondDataUpdateCoordinator(DataUpdateCoordinator):
     async def _async_update_data(self) -> Any:
         """Update data via library."""
         try:
-            return await self.config_entry.runtime_data.client.async_get_data()
+            return await self.config_entry.runtime_data.client.async_get_home()
         except AcondProApiClientAuthenticationError as exception:
             raise ConfigEntryAuthFailed(exception) from exception
         except AcondProApiClientError as exception:
