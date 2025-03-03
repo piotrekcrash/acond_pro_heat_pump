@@ -163,7 +163,7 @@ class AcondProApiClient:
                 response = await self._session.request(
                     method='post',
                     url="https://" + self._ip_address + URL_LOGIN,
-                    headers=headers,
+                    # headers=headers,
                     data=data,
                 )
                 LOGGER.error('POST1')
@@ -171,6 +171,8 @@ class AcondProApiClient:
                 response = await self._session.request(
                     method='post',
                     url="https://" + self._ip_address + URL_LOGIN,
+                    # headers=headers,
+                    data=data,
                 )
                 LOGGER.error('POST2')
                 LOGGER.error(response)
