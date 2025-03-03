@@ -8,6 +8,9 @@ from typing import Any
 import aiohttp
 import async_timeout
 from aiohttp import FormData
+import logging
+
+_LOGGER = logging.getLogger(__name__)
 
 from .const import URL_LOGIN, URL_HOME
 
@@ -135,6 +138,7 @@ class AcondProApiClient:
                     headers=headers,
                     json=data,
                 )
+                _LOGGER.error('A')
                 if(response.status == 200):
                     return await response.text()
                 if response.status is 302:
@@ -144,6 +148,7 @@ class AcondProApiClient:
                     headers=headers,
 
                 ) 
+                _LOGGER.error('A')
                 if response.headers.location == URL_LOGIN:
                     data = FormData()
                     data.add_field('USER', self._username)
@@ -154,6 +159,7 @@ class AcondProApiClient:
                     headers=headers,
                     data=data,
                 )
+                _LOGGER.error('A')
                 if response.status == 200:
                     response = await self._session.request(
                     method=method,
@@ -161,6 +167,7 @@ class AcondProApiClient:
                     headers=headers,
                     json=data,
                 )
+                _LOGGER.error('A')
                 return await response.text()
 
         except TimeoutError as exception:
