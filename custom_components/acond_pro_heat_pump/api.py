@@ -177,7 +177,7 @@ class AcondProApiClient:
                 LOGGER.error('POST2')
                 LOGGER.error(response)
                 resp = await response.text()
-
+                LOGGER.error('Resp2: ' + resp)
                 return resp
                 if response.status == 200:
                     response = await self._session.request(
