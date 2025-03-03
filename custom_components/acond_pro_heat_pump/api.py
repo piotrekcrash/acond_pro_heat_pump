@@ -7,8 +7,9 @@ from typing import Any
 
 import aiohttp
 import async_timeout
+from aiohttp import FormData
 
-from .const import URL_LOGIN
+from .const import URL_LOGIN, URL_HOME
 
 
 class AcondProApiClientError(Exception):
@@ -106,19 +107,12 @@ class AcondProApiClient:
     
     async def login(self) -> Any:
         """Get data from the API."""
-        login_url = "https://" + self._ip_address + URL_LOGIN
+        login_url = "https://" + self._ip_address + URL_HOME
         response = await self._api_txt_wrapper(
             method="get",
             url=login_url,
         )
-        if response.status in (302):
-            resp = await self._api_txt_wrapper(
-            method="get",
-            url=login_url,
-        )
-        
 
-        
     async def _api_txt_wrapper(
         self,
         method: str,
@@ -135,7 +129,23 @@ class AcondProApiClient:
                     headers=headers,
                     json=data,
                 )
-                _verify_response_or_raise(response)
+                if response.status in (301):
+                    response = await self._session.request(
+                    method='get',
+                    url=url,
+                    headers=headers,
+
+                )
+                if response.headers.location is '':
+                    data = FormData()
+                    data.add_field('USER', self._username)
+                    data.add_field('PASS', self._password)
+                    response = await self._session.request(
+                    method='post',
+                    url="https://" + self._ip_address + URL_LOGIN,
+                    headers=headers,
+                    data=data,
+                )
                 return await response.text()
 
         except TimeoutError as exception:

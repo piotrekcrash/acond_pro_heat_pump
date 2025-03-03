@@ -8,3 +8,5 @@ DOMAIN = "acond_pro_heat_pump"
 ATTRIBUTION = "Data provided by http://jsonplaceholder.typicode.com/"
 
 URL_LOGIN = "/SYSWWW/LOGIN.XML"
+URL_HOME = "/PAGE115.XML"
+URL_TIMETABLES_1 = "/PAGE115.XML"
