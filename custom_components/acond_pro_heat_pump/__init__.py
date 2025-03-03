@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from datetime import timedelta
 from typing import TYPE_CHECKING
+import aiohttp
 
 from homeassistant.const import CONF_IP_ADDRESS, CONF_PASSWORD, CONF_USERNAME, Platform
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
@@ -43,12 +44,13 @@ async def async_setup_entry(
         name=DOMAIN,
         update_interval=timedelta(hours=1),
     )
+    jar = aiohttp.DummyCookieJar()
     entry.runtime_data = AcondProData(
         client=AcondProApiClient(
             ip_address=entry.data[CONF_IP_ADDRESS],
             username=entry.data[CONF_USERNAME],
             password=entry.data[CONF_PASSWORD],
-            session=async_get_clientsession(hass, verify_ssl=False),
+            session=async_get_clientsession(hass, verify_ssl=False, cookie_jar=jar),
         ),
         integration=async_get_loaded_integration(hass, entry.domain),
         coordinator=coordinator,
