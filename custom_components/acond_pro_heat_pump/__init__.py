@@ -1,79 +1,82 @@
-import aiohttp
-from aiohttp import FormData
-import ssl
+"""
+Custom integration to integrate acond_pro_heat_pump with Home Assistant.
+
+For more details about this integration, please refer to
+https://github.com/ludeeus/acond_pro_heat_pump
+"""
+
+from __future__ import annotations
+
 from datetime import timedelta
-from homeassistant.components.sensor import SensorEntity
-from homeassistant.core import HomeAssistant
+from typing import TYPE_CHECKING
+import aiohttp
+
+from homeassistant.const import CONF_IP_ADDRESS, CONF_PASSWORD, CONF_USERNAME, Platform
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, CoordinatorEntity
+from homeassistant.loader import async_get_loaded_integration
 
-class ExampleSensor(CoordinatorEntity, SensorEntity):
-    def __init__(self, coordinator, name, value_key):
-        super().__init__(coordinator)
-        self._name = name
-        self._value_key = value_key
+from .api import AcondProApiClient
+from .const import DOMAIN, LOGGER
+from .coordinator import AcondDataUpdateCoordinator
+from .data import AcondProData
 
-    @property
-    def name(self):
-        return self._name
+if TYPE_CHECKING:
+    from homeassistant.core import HomeAssistant
 
-    @property
-    def state(self):
-        return self.coordinator.data.get(self._value_key)
+    from .data import AcondProConfigEntry
 
-async def async_setup_entry(hass: HomeAssistant, entry, async_add_entities):
-    # Create a custom SSL context that doesn't verify certificates
-    ssl_context = ssl.create_default_context()
-    ssl_context.check_hostname = False
-    ssl_context.verify_mode = ssl.CERT_NONE
+PLATFORMS: list[Platform] = [
+    Platform.SENSOR,
+    Platform.BINARY_SENSOR,
+    Platform.SWITCH,
+]
 
-    # Create a cookie jar
-    cookie_jar = aiohttp.CookieJar(unsafe=True)
 
-    # Create the session with the cookie jar and custom SSL context
-    session = async_create_clientsession(
-        hass,
-        cookie_jar=cookie_jar,
-        verify_ssl=False,
-        connector=aiohttp.TCPConnector(ssl=ssl_context)
+# https://developers.home-assistant.io/docs/config_entries_index/#setting-up-an-entry
+async def async_setup_entry(
+    hass: HomeAssistant,
+    entry: AcondProConfigEntry,
+) -> bool:
+    """Set up this integration using UI."""
+    coordinator = AcondDataUpdateCoordinator(
+        hass=hass,
+        logger=LOGGER,
+        name=DOMAIN,
+        update_interval=timedelta(hours=1),
+    )
+    jar = aiohttp.CookieJar(unsafe=True)
+    entry.runtime_data = AcondProData(
+        client=AcondProApiClient(
+            ip_address=entry.data[CONF_IP_ADDRESS],
+            username=entry.data[CONF_USERNAME],
+            password=entry.data[CONF_PASSWORD],
+            session=async_create_clientsession(hass, verify_ssl=False, cookie_jar=jar),
+        ),
+        integration=async_get_loaded_integration(hass, entry.domain),
+        coordinator=coordinator,
     )
 
-    # Function to perform login and set cookies
-    async def login():
-        login_url = 'http://192.168.11.145/SYSWWW/LOGIN.XML'
-        # login_data = {"username": "your_username", "password": "your_password"}
-        response = await session.get(login_url)
-        data = FormData(quote_fields=True, charset='utf-8')
-        data.add_field('USER', 'PioLyc2024')
-        data.add_field('PASS', 'PioLyc2024')
-        response = await session.post(login_url, data=data)
-            # The cookies from the response will be automatically stored in the cookie jar
-
-    async def async_update_data():
-        # Ensure we're logged in before making the request
-        if not session.cookie_jar:
-            await login()
-
-        async with session.get("http://192.168.207.98/getParameters") as response:
-            data = await response.json()
-            return data["list"][0]
-
-    coordinator = DataUpdateCoordinator(
-        hass,
-        hass.logger,
-        name="example_sensor",
-        update_method=async_update_data,
-        update_interval=timedelta(minutes=5)
-    )
-
+    # https://developers.home-assistant.io/docs/integration_fetching_data#coordinated-single-api-poll-for-data-for-all-entities
     await coordinator.async_config_entry_first_refresh()
 
-    sensors = [
-        ExampleSensor(coordinator, "Vehicle State", "vehicleState"),
-        ExampleSensor(coordinator, "EVSE State", "evseState"),
-        ExampleSensor(coordinator, "Max Current", "maxCurrent"),
-        ExampleSensor(coordinator, "Actual Current", "actualCurrent"),
-        ExampleSensor(coordinator, "Actual Power", "actualPower")
-    ]
+    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+    entry.async_on_unload(entry.add_update_listener(async_reload_entry))
 
-    async_add_entities(sensors)
+    return True
+
+
+async def async_unload_entry(
+    hass: HomeAssistant,
+    entry: AcondProConfigEntry,
+) -> bool:
+    """Handle removal of an entry."""
+    return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+
+
+async def async_reload_entry(
+    hass: HomeAssistant,
+    entry: AcondProConfigEntry,
+) -> None:
+    """Reload config entry."""
+    await async_unload_entry(hass, entry)
+    await async_setup_entry(hass, entry)

@@ -121,6 +121,7 @@ class AcondProApiClient:
             method="get",
             url=login_url,
         )
+        LOGGER.error(response)
 
     async def _api_txt_wrapper(
         self,
@@ -161,17 +162,16 @@ class AcondProApiClient:
                 data = FormData(quote_fields=True, charset='utf-8')
                 data.add_field('USER', self._username)
                 data.add_field('PASS', self._password)
+                
                 response = await self._session.request(
                     method='post',
-
                     url="https://" + self._ip_address + URL_LOGIN,
                     headers=headers,
                     data=data,
                 )
-                LOGGER.error('CookieJar')
-                LOGGER.error(self._session.cookie_jar)
                 LOGGER.error('POST')
                 LOGGER.error(response)
+
                 return await response.text()
                 if response.status == 200:
                     response = await self._session.request(
