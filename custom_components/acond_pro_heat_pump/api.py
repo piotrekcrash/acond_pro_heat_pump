@@ -160,7 +160,7 @@ class AcondProApiClient:
                 data.add_field('PASS', self._password)
                 response = await self._session.request(
                     method='post',
-                    content_type='application/x-www-form-urlencoded'
+                    content_type='application/x-www-form-urlencoded',
                     url="https://" + self._ip_address + URL_LOGIN,
                     headers=headers,
                     data=data,
