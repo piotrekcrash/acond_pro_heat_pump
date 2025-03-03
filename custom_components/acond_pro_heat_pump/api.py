@@ -166,18 +166,19 @@ class AcondProApiClient:
                     headers=headers,
                     data=data,
                 )
-                LOGGER.error('POST1' + await response.text())
-                LOGGER.error(response)
-                response = await self._session.request(
+                LOGGER.error('POST1: ' response.status + ' ' + await response.text())
+                # LOGGER.error(response)
+
+                response2 = await self._session.request(
                     method='post',
                     url="https://" + self._ip_address + URL_LOGIN,
                     headers=headers,
                     data=data,
                 )
                 LOGGER.error('POST2')
-                LOGGER.error(response)
-                resp = await response.text()
-                LOGGER.error('Resp2: ' + resp)
+                # LOGGER.error(response)
+                resp = await response2.text()
+                LOGGER.error('Resp2: ' + response2.status + ' ' + resp)
                 return resp
                 if response.status == 200:
                     response = await self._session.request(
