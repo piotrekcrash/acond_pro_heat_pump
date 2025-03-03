@@ -129,14 +129,16 @@ class AcondProApiClient:
                     headers=headers,
                     json=data,
                 )
-                if response.status in (301):
+                if(response.status is 200):
+                    return await response.text()
+                if response.status is 302:
                     response = await self._session.request(
                     method='get',
-                    url=url,
+                    url="https://" + self._ip_address + response.headers.location,
                     headers=headers,
 
-                )
-                if response.headers.location is '':
+                ) 
+                if response.headers.location == URL_LOGIN:
                     data = FormData()
                     data.add_field('USER', self._username)
                     data.add_field('PASS', self._password)
@@ -145,6 +147,13 @@ class AcondProApiClient:
                     url="https://" + self._ip_address + URL_LOGIN,
                     headers=headers,
                     data=data,
+                )
+                if response.status is 200:
+                    response = await self._session.request(
+                    method=method,
+                    url=url,
+                    headers=headers,
+                    json=data,
                 )
                 return await response.text()
 
