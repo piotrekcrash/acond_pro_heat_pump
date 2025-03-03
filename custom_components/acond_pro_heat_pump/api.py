@@ -132,32 +132,39 @@ class AcondProApiClient:
         """Get information from the API."""
         try:
             async with async_timeout.timeout(10):
-                response = await self._session.request(
+                """response = await self._session.request(
                     method=method,
                     url=url,
                     headers=headers,
                     json=data,
-                )
+                )"""
                 # if(response.status == 200):
                 #     return await response.text()
-                if response.status == 302:
+                """if response.status == 302:
                     response = await self._session.request(
                     method='get',
                     url="https://" + self._ip_address + response.headers.location,
                     headers=headers,
 
-                ) 
+                ) """
                 # if response.headers.location == URL_LOGIN:
+                response = await self._session.request(
+                    method='get',
+                    url="https://" + self._ip_address + URL_LOGIN,
+                    headers=headers,
+                    json=data,
+                )
+
                 data = FormData(quote_fields=True, charset='utf-8')
                 data.add_field('USER', self._username, content_type='application/x-www-form-urlencoded')
                 data.add_field('PASS', self._password, content_type='application/x-www-form-urlencoded')
                 response = await self._session.request(
                     method='post',
-                    content_type= 'application/x-www-form-urlencoded',
                     url="https://" + self._ip_address + URL_LOGIN,
                     headers=headers,
                     data=data,
                 )
+                return await response.text()
                 if response.status == 200:
                     response = await self._session.request(
                     method=method,
