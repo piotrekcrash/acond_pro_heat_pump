@@ -152,9 +152,8 @@ class AcondProApiClient:
                 response = await self._session.request(
                     method='get',
                     url="https://" + self._ip_address + URL_LOGIN,
-                    headers=headers,
-                    json=data,
                 )
+                LOGGER.error('GET')
                 LOGGER.error(response)
                 #  content_type='application/x-www-form-urlencoded'
                 data = FormData(quote_fields=True, charset='utf-8')
@@ -162,11 +161,10 @@ class AcondProApiClient:
                 data.add_field('PASS', self._password)
                 response = await self._session.request(
                     method='post',
-
                     url="https://" + self._ip_address + URL_LOGIN,
-                    headers=headers,
                     data=data,
                 )
+                LOGGER.error('POST')
                 LOGGER.error(response)
                 return await response.text()
                 if response.status == 200:
