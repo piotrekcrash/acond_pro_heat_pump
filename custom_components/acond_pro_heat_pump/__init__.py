@@ -44,7 +44,7 @@ async def async_setup_entry(
         name=DOMAIN,
         update_interval=timedelta(hours=1),
     )
-    jar = aiohttp.CookieJar(quote_cookie=False)
+    jar = aiohttp.CookieJar(unsafe=True)
     entry.runtime_data = AcondProData(
         client=AcondProApiClient(
             ip_address=entry.data[CONF_IP_ADDRESS],
