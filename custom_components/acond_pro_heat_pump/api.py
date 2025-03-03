@@ -148,6 +148,7 @@ class AcondProApiClient:
 
                 ) """
                 # if response.headers.location == URL_LOGIN:
+                
                 response = await self._session.request(
                     method='get',
                     url="https://" + self._ip_address + URL_LOGIN,
