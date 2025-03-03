@@ -74,10 +74,11 @@ class AcondProApiClient:
         )
     
     async def async_get_home(self) -> Any:
-        return await self._api_txt_wrapper(
+        """return await self._api_txt_wrapper(
             method="get",
             url="https://" + self._ip_address + URL_HOME,
-        )
+        )"""
+        return 'test'
 
     async def _api_wrapper(
         self,
