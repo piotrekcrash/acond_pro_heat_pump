@@ -156,10 +156,11 @@ class AcondProApiClient:
                 )
 
                 data = FormData(quote_fields=True, charset='utf-8')
-                data.add_field('USER', self._username, content_type='application/x-www-form-urlencoded')
-                data.add_field('PASS', self._password, content_type='application/x-www-form-urlencoded')
+                data.add_field('USER', self._username)
+                data.add_field('PASS', self._password)
                 response = await self._session.request(
                     method='post',
+                    content_type='application/x-www-form-urlencoded'
                     url="https://" + self._ip_address + URL_LOGIN,
                     headers=headers,
                     data=data,
