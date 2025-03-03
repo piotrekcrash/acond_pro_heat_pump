@@ -150,9 +150,9 @@ class AcondProApiClient:
                 ) 
                 _LOGGER.error('A')
                 if response.headers.location == URL_LOGIN:
-                    data = FormData()
-                    data.add_field('USER', self._username)
-                    data.add_field('PASS', self._password)
+                    data = FormData(quote_fields=True, charset=None)
+                    data.add_field('USER', self._username, content_type='application/x-www-form-urlencoded')
+                    data.add_field('PASS', self._password, content_type='application/x-www-form-urlencoded')
                     response = await self._session.request(
                     method='post',
                     url="https://" + self._ip_address + URL_LOGIN,
