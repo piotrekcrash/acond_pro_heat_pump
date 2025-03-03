@@ -12,7 +12,7 @@ from typing import TYPE_CHECKING
 import aiohttp
 
 from homeassistant.const import CONF_IP_ADDRESS, CONF_PASSWORD, CONF_USERNAME, Platform
-from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.helpers.aiohttp_client import async_create_clientsession
 from homeassistant.loader import async_get_loaded_integration
 
 from .api import AcondProApiClient
@@ -50,7 +50,7 @@ async def async_setup_entry(
             ip_address=entry.data[CONF_IP_ADDRESS],
             username=entry.data[CONF_USERNAME],
             password=entry.data[CONF_PASSWORD],
-            session=async_get_clientsession(hass, verify_ssl=False, cookie_jar=jar),
+            session=async_create_clientsession(hass, verify_ssl=False, cookie_jar=jar),
         ),
         integration=async_get_loaded_integration(hass, entry.domain),
         coordinator=coordinator,
