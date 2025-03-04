@@ -134,7 +134,7 @@ class AcondProApiClient:
             method="get",
             url=login_url,
         )
-        LOGGER.error(response)
+        # LOGGER.error(response)
 
     async def _api_txt_wrapper(
         self,
@@ -166,7 +166,7 @@ class AcondProApiClient:
                     for input_elem in input_elements:
                         name = input_elem.get('NAME')
                         value = input_elem.get('VALUE')
-                        LOGGER.error(f"Name: {name}, Value: {value}")
+                        # LOGGER.error(f"Name: {name}, Value: {value}")
                         value_dict[name] = value
                     return value_dict
         except TimeoutError as exception:
