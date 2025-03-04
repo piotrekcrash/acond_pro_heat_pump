@@ -139,7 +139,9 @@ class AcondProApiClient:
         """Get information from the API."""
         try:
             async with async_timeout.timeout(10):
-                async with self._session as session:
+                # async with self._session as session:
+                cookie_jar = aiohttp.CookieJar(unsafe=True)
+                async with aiohttp.ClientSession(cookie_jar=cookie_jar, connector=aiohttp.TCPConnector(ssl=ssl_context)) as session:
                     await session.get("https://" + self._ip_address + URL_LOGIN)
                     data = aiohttp.FormData(quote_fields=True, charset='utf-8')
                     data.add_field('USER', 'PioLyc2024')
