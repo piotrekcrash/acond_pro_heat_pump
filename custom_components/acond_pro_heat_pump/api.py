@@ -10,7 +10,8 @@ from .const import LOGGER
 import aiohttp
 import ssl
 import async_timeout
-from aiohttp import FormData
+from bs4 import BeautifulSoup
+
 
 ssl_context = ssl.create_default_context()
 ssl_context.check_hostname = False
@@ -149,6 +150,16 @@ class AcondProApiClient:
                     response = await session.post(url="https://" + self._ip_address + URL_LOGIN, data=data)
                     body = await response.read()
                     strBody = body.decode('utf-8', errors='replace')
+                    soup = BeautifulSoup(strBody, 'xml')
+
+                    # Find all INPUT elements
+                    input_elements = soup.find_all('INPUT')
+
+                    # Print information for each INPUT element
+                    for input_elem in input_elements:
+                        name = input_elem.get('NAME')
+                        value = input_elem.get('VALUE')
+                        print(f"Name: {name}, Value: {value}")
                     print(strBody)
                     return strBody
         except TimeoutError as exception:
