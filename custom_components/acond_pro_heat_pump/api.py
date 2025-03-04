@@ -134,6 +134,16 @@ class AcondProApiClient:
         """Get information from the API."""
         try:
             async with async_timeout.timeout(10):
+                await self._session.get("https://" + self._ip_address + URL_LOGIN)
+                data = aiohttp.FormData(quote_fields=True, charset='utf-8')
+                data.add_field('USER', 'PioLyc2024')
+                data.add_field('PASS', 'PioLyc2024')
+                response = await self._session.post(url="https://" + self._ip_address + URL_LOGIN, data=data)
+                body = await response.read()
+                strBody = body.decode('utf-8', errors='replace')
+                print(strBody)
+                return strBody
+
                 """response = await self._session.request(
                     method=method,
                     url=url,
