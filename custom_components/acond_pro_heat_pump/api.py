@@ -150,7 +150,7 @@ class AcondProApiClient:
                     response = await session.post(url="https://" + self._ip_address + URL_LOGIN, data=data)
                     body = await response.read()
                     strBody = body.decode('utf-8', errors='replace')
-                    soup = BeautifulSoup(strBody, 'xml')
+                    soup = BeautifulSoup(strBody, 'lxml-xml')
 
                     # Find all INPUT elements
                     input_elements = soup.find_all('INPUT')
