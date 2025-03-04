@@ -150,6 +150,7 @@ class AcondProApiClient:
                     response = await session.post(url="https://" + self._ip_address + URL_LOGIN, data=data)
                     body = await response.read()
                     strBody = body.decode('utf-8', errors='replace')
+
                     soup = BeautifulSoup(strBody, 'lxml-xml')
 
                     # Find all INPUT elements
@@ -159,8 +160,7 @@ class AcondProApiClient:
                     for input_elem in input_elements:
                         name = input_elem.get('NAME')
                         value = input_elem.get('VALUE')
-                        print(f"Name: {name}, Value: {value}")
-                    print(strBody)
+                        LOGGER.error(f"Name: {name}, Value: {value}")
                     return strBody
         except TimeoutError as exception:
             msg = f"Timeout error fetching information - {exception}"
