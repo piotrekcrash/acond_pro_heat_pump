@@ -21,11 +21,15 @@ ENTITY_DESCRIPTIONS = (
         key="__TA725D6FD_REAL_.0f",
         name="Integration Sensor 1",
         icon="mdi:format-quote-close",
+        native_unit_of_measurement="kW",
+        state_class="TOTAL",
     ),
     SensorEntityDescription(
         key="__T6BEBB72C_REAL_.0f",
         name="Integration Sensor 2",
         icon="mdi:format-quote-close",
+        native_unit_of_measurement="GJ",
+        state_class="TOTAL",
     ),
 )
 
