@@ -23,7 +23,7 @@ ENTITY_DESCRIPTIONS = (
         icon="mdi:format-quote-close",
         native_unit_of_measurement="kWh",
         unit_of_measurement="kWh",
-        state_class="TOTAL",
+        state_class="total_increasing",
         device_class="energy",
     ),
     SensorEntityDescription(
@@ -32,7 +32,7 @@ ENTITY_DESCRIPTIONS = (
         icon="mdi:format-quote-close",
         native_unit_of_measurement="GJ",
         unit_of_measurement="GJ",
-        state_class="TOTAL",
+        state_class="total_increasing",
         device_class="energy",
     ),
 )
