@@ -23,6 +23,7 @@ ENTITY_DESCRIPTIONS = (
         icon="mdi:format-quote-close",
         native_unit_of_measurement="kW",
         state_class="TOTAL",
+        device_class="energy",
     ),
     SensorEntityDescription(
         key="__T6BEBB72C_REAL_.0f",
@@ -30,6 +31,7 @@ ENTITY_DESCRIPTIONS = (
         icon="mdi:format-quote-close",
         native_unit_of_measurement="GJ",
         state_class="TOTAL",
+        device_class="energy",
     ),
 )
 
