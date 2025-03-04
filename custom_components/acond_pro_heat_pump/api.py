@@ -8,8 +8,13 @@ from typing import Any
 from .const import LOGGER
 
 import aiohttp
+import ssl
 import async_timeout
 from aiohttp import FormData
+
+ssl_context = ssl.create_default_context()
+ssl_context.check_hostname = False
+ssl_context.verify_mode = ssl.CERT_NONE
 
 
 from .const import URL_LOGIN, URL_HOME
@@ -134,71 +139,16 @@ class AcondProApiClient:
         """Get information from the API."""
         try:
             async with async_timeout.timeout(10):
-                await self._session.get("https://" + self._ip_address + URL_LOGIN)
-                data = aiohttp.FormData(quote_fields=True, charset='utf-8')
-                data.add_field('USER', 'PioLyc2024')
-                data.add_field('PASS', 'PioLyc2024')
-                response = await self._session.post(url="https://" + self._ip_address + URL_LOGIN, data=data)
-                body = await response.read()
-                strBody = body.decode('utf-8', errors='replace')
-                print(strBody)
-                return strBody
-
-                """response = await self._session.request(
-                    method=method,
-                    url=url,
-                    headers=headers,
-                    json=data,
-                )"""
-                # if(response.status == 200):
-                #     return await response.text()
-                """if response.status == 302:
-                    response = await self._session.request(
-                    method='get',
-                    url="https://" + self._ip_address + response.headers.location,
-                    headers=headers,
-
-                ) """
-                # if response.headers.location == URL_LOGIN:
-                """response = await self._session.request(
-                    method='get',
-                    url="https://" + self._ip_address + URL_LOGIN,
-                    headers=headers,
-                    json=data,
-                )"""
-                #  content_type='application/x-www-form-urlencoded'
-                data = FormData(quote_fields=True, charset='utf-8')
-                data.add_field('USER', self._username)
-                data.add_field('PASS', self._password)
-                
-                response = await self._session.request(
-                    method='post',
-                    url="https://" + self._ip_address + URL_LOGIN,
-                    headers=headers,
-                    data=data,
-                )
-                LOGGER.error('POST1: ' + await response.text())
-                # LOGGER.error(response)
-
-                response2 = await self._session.request(
-                    method='post',
-                    url="https://" + self._ip_address + URL_LOGIN,
-                    headers=headers,
-                    data=data,
-                )
-                # LOGGER.error(response)
-                resp = await response2.text()
-                LOGGER.error('POST2: ' + resp)
-                return resp
-                if response.status == 200:
-                    response = await self._session.request(
-                    method=method,
-                    url=url,
-                    headers=headers,
-                    json=data,
-                )
-                return await response.text()
-
+                async with self._session as session:
+                    await session.get("https://" + self._ip_address + URL_LOGIN)
+                    data = aiohttp.FormData(quote_fields=True, charset='utf-8')
+                    data.add_field('USER', 'PioLyc2024')
+                    data.add_field('PASS', 'PioLyc2024')
+                    response = await session.post(url="https://" + self._ip_address + URL_LOGIN, data=data)
+                    body = await response.read()
+                    strBody = body.decode('utf-8', errors='replace')
+                    print(strBody)
+                    return strBody
         except TimeoutError as exception:
             msg = f"Timeout error fetching information - {exception}"
             raise AcondProApiClientCommunicationError(
