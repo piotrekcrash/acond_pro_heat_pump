@@ -47,7 +47,7 @@ async def async_setup_entry(
         hass=hass,
         logger=LOGGER,
         name=DOMAIN,
-        update_interval=timedelta(hours=1),
+        update_interval=timedelta(seconds=30),
     )
     jar = aiohttp.CookieJar(unsafe=True)
     # connector=aiohttp.TCPConnector(ssl=ssl_context)
