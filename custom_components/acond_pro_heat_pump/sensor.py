@@ -18,12 +18,12 @@ if TYPE_CHECKING:
 
 ENTITY_DESCRIPTIONS = (
     SensorEntityDescription(
-        key="body",
+        key="__TA725D6FD_REAL_.0f",
         name="Integration Sensor 1",
         icon="mdi:format-quote-close",
     ),
     SensorEntityDescription(
-        key="title",
+        key="__T6BEBB72C_REAL_.0f",
         name="Integration Sensor 2",
         icon="mdi:format-quote-close",
     ),
@@ -62,4 +62,4 @@ class AcondProSensor(AcondProEntity, SensorEntity):
     def native_value(self) -> str | None:
         """Return the native value of the sensor."""
         # return self.coordinator.data.get(self.entity_description.key)
-        return self.coordinator.data
+        return self.coordinator.data[self.entity_description.key]

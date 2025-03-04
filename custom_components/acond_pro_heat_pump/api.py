@@ -84,7 +84,12 @@ class AcondProApiClient:
             method="get",
             url="https://" + self._ip_address + URL_HOME,
         )"""
-        return 'test'
+        LOGGER.error('LOAD_DATA')
+        response = await self._api_txt_wrapper(
+            method="get",
+            url='',
+        )
+        return response
 
     async def _api_wrapper(
         self,
@@ -123,6 +128,7 @@ class AcondProApiClient:
     
     async def login(self) -> Any:
         """Get data from the API."""
+        LOGGER.error('LOGIN')
         login_url = "https://" + self._ip_address + URL_HOME
         response = await self._api_txt_wrapper(
             method="get",
@@ -155,13 +161,14 @@ class AcondProApiClient:
 
                     # Find all INPUT elements
                     input_elements = soup.find_all('INPUT')
-
+                    value_dict = {}
                     # Print information for each INPUT element
                     for input_elem in input_elements:
                         name = input_elem.get('NAME')
                         value = input_elem.get('VALUE')
                         LOGGER.error(f"Name: {name}, Value: {value}")
-                    return strBody
+                        value_dict[name] = value
+                    return value_dict
         except TimeoutError as exception:
             msg = f"Timeout error fetching information - {exception}"
             raise AcondProApiClientCommunicationError(
