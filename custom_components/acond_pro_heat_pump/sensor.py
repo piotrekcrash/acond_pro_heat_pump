@@ -19,7 +19,7 @@ if TYPE_CHECKING:
 ENTITY_DESCRIPTIONS = (
     SensorEntityDescription(
         key="__TA725D6FD_REAL_.0f",
-        name="acond_electric_enery_sensor",
+        name="Acond Electric Enery",
         icon="mdi:format-quote-close",
         native_unit_of_measurement="kWh",
         state_class="TOTAL",
@@ -27,7 +27,7 @@ ENTITY_DESCRIPTIONS = (
     ),
     SensorEntityDescription(
         key="__T6BEBB72C_REAL_.0f",
-        name="acond_heat_enery_sensor",
+        name="Acond Thermal Enery",
         icon="mdi:format-quote-close",
         native_unit_of_measurement="GJ",
         state_class="TOTAL",
