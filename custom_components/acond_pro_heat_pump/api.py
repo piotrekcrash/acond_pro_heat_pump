@@ -145,8 +145,8 @@ class AcondProApiClient:
                 async with aiohttp.ClientSession(cookie_jar=cookie_jar, connector=aiohttp.TCPConnector(ssl=ssl_context)) as session:
                     await session.get("https://" + self._ip_address + URL_LOGIN)
                     data = aiohttp.FormData(quote_fields=True, charset='utf-8')
-                    data.add_field('USER', 'PioLyc2024')
-                    data.add_field('PASS', 'PioLyc2024')
+                    data.add_field("USER", self._username)
+                    data.add_field("PASS", self._password)
                     response = await session.post(url="https://" + self._ip_address + URL_LOGIN, data=data)
                     body = await response.read()
                     strBody = body.decode('utf-8', errors='replace')
