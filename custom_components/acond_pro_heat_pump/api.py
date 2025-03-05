@@ -80,10 +80,6 @@ class AcondProApiClient:
         )
     
     async def async_get_home(self) -> Any:
-        """return await self._api_txt_wrapper(
-            method="get",
-            url="https://" + self._ip_address + URL_HOME,
-        )"""
         LOGGER.error('LOAD_DATA')
         response = await self._api_txt_wrapper(
             method="get",
@@ -134,7 +130,6 @@ class AcondProApiClient:
             method="get",
             url=login_url,
         )
-        # LOGGER.error(response)
 
     async def _api_txt_wrapper(
         self,
@@ -146,7 +141,6 @@ class AcondProApiClient:
         """Get information from the API."""
         try:
             async with async_timeout.timeout(10):
-                # async with self._session as session:
                 cookie_jar = aiohttp.CookieJar(unsafe=True)
                 async with aiohttp.ClientSession(cookie_jar=cookie_jar, connector=aiohttp.TCPConnector(ssl=ssl_context)) as session:
                     await session.get("https://" + self._ip_address + URL_LOGIN)
@@ -156,17 +150,12 @@ class AcondProApiClient:
                     response = await session.post(url="https://" + self._ip_address + URL_LOGIN, data=data)
                     body = await response.read()
                     strBody = body.decode('utf-8', errors='replace')
-
                     soup = BeautifulSoup(strBody, 'lxml-xml')
-
-                    # Find all INPUT elements
                     input_elements = soup.find_all('INPUT')
                     value_dict = {}
-                    # Print information for each INPUT element
                     for input_elem in input_elements:
                         name = input_elem.get('NAME')
                         value = input_elem.get('VALUE')
-                        # LOGGER.error(f"Name: {name}, Value: {value}")
                         value_dict[name] = value
                     return value_dict
         except TimeoutError as exception:
