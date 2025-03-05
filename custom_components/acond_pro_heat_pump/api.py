@@ -77,7 +77,7 @@ class AcondProApiClient:
         LOGGER.error('LOAD_DATA')
         response = await self._api_txt_wrapper(
             method="get",
-            url='',
+            url=URL_HOME,
         )
         return response
 
@@ -119,10 +119,9 @@ class AcondProApiClient:
     async def login(self) -> Any:
         """Get data from the API."""
         LOGGER.error('LOGIN')
-        login_url = "https://" + self._ip_address + URL_HOME
         response = await self._api_txt_wrapper(
             method="get",
-            url=login_url,
+            url=URL_HOME,
         )
 
     def map_response(self, strResponse) -> Any:
@@ -140,6 +139,9 @@ class AcondProApiClient:
         data.add_field("USER", self._username)
         data.add_field("PASS", self._password)
         return data
+    
+    def _build_url(self, url) -> str:
+        return "https://" + self._ip_address + url
 
     async def _api_txt_wrapper(
         self,
@@ -151,12 +153,15 @@ class AcondProApiClient:
         """Get information from the API."""
         try:
             async with async_timeout.timeout(10):
-                # sess = aiohttp.ClientSession(cookie_jar=aiohttp.CookieJar(unsafe=True), connector=aiohttp.TCPConnector(ssl=ssl_context))
-                # cookie_jar = aiohttp.CookieJar(unsafe=True)
                 async with aiohttp.ClientSession(cookie_jar=self._cookie_jar, connector=aiohttp.TCPConnector(ssl=ssl_context)) as session:
-                # async with self._session as session:
-                    await session.get("https://" + self._ip_address + URL_LOGIN)
-                    response = await session.post(url="https://" + self._ip_address + URL_LOGIN, data=self.login_form())
+                    response = await session.request(url=self._build_url(url), method=method, data=data, headers=headers, allow_redirects=False)
+                    if response.status == 302:
+                        LOGGER.error('AUTH after 302')
+                        response = await session.post(url=self._build_url(URL_LOGIN) , data=self.login_form())
+                        if response.status == 302:
+                            LOGGER.error('302 after AUTH')
+                            raise AcondProApiClientAuthenticationError("Invalid credentials")
+                    response = await session.request(url=self._build_url(url), method=method, data=data, headers=headers, allow_redirects=False)
                     body = await response.read()
                     strBody = body.decode('utf-8', errors='replace')
                     return self.map_response(strBody)
