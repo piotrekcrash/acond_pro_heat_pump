@@ -43,13 +43,14 @@ async def async_setup_entry(
         name=DOMAIN,
         update_interval=timedelta(seconds=30),
     )
-    jar = aiohttp.CookieJar(unsafe=True)
+    cookie_jar = aiohttp.CookieJar(unsafe=True)
     entry.runtime_data = AcondProData(
         client=AcondProApiClient(
             ip_address=entry.data[CONF_IP_ADDRESS],
             username=entry.data[CONF_USERNAME],
             password=entry.data[CONF_PASSWORD],
-            session=async_create_clientsession(hass, verify_ssl=False, cookie_jar=jar),
+            # session=async_create_clientsession(hass, verify_ssl=False, cookie_jar=jar),
+            session=aiohttp.ClientSession(cookie_jar=cookie_jar, connector=aiohttp.TCPConnector(ssl=ssl_context)),
         ),
         integration=async_get_loaded_integration(hass, entry.domain),
         coordinator=coordinator,
