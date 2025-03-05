@@ -124,6 +124,22 @@ class AcondProApiClient:
             url=login_url,
         )
 
+    def map_response(self, strResponse) -> Any:
+        soup = BeautifulSoup(strResponse, 'lxml-xml')
+        input_elements = soup.find_all('INPUT')
+        value_dict = {}
+        for input_elem in input_elements:
+            name = input_elem.get('NAME')
+            value = input_elem.get('VALUE')
+            value_dict[name] = value
+        return value_dict
+    
+    def login_form(self) -> aiohttp.FormData:
+        data = aiohttp.FormData(quote_fields=True, charset='utf-8')
+        data.add_field("USER", self._username)
+        data.add_field("PASS", self._password)
+        return data
+
     async def _api_txt_wrapper(
         self,
         method: str,
@@ -137,20 +153,10 @@ class AcondProApiClient:
                 cookie_jar = aiohttp.CookieJar(unsafe=True)
                 async with aiohttp.ClientSession(cookie_jar=cookie_jar, connector=aiohttp.TCPConnector(ssl=ssl_context)) as session:
                     await session.get("https://" + self._ip_address + URL_LOGIN)
-                    data = aiohttp.FormData(quote_fields=True, charset='utf-8')
-                    data.add_field("USER", self._username)
-                    data.add_field("PASS", self._password)
-                    response = await session.post(url="https://" + self._ip_address + URL_LOGIN, data=data)
+                    response = await session.post(url="https://" + self._ip_address + URL_LOGIN, data=self.login_form())
                     body = await response.read()
                     strBody = body.decode('utf-8', errors='replace')
-                    soup = BeautifulSoup(strBody, 'lxml-xml')
-                    input_elements = soup.find_all('INPUT')
-                    value_dict = {}
-                    for input_elem in input_elements:
-                        name = input_elem.get('NAME')
-                        value = input_elem.get('VALUE')
-                        value_dict[name] = value
-                    return value_dict
+                    return self.map_response(strBody)
         except TimeoutError as exception:
             msg = f"Timeout error fetching information - {exception}"
             raise AcondProApiClientCommunicationError(
