@@ -175,6 +175,11 @@ class AcondProApiClient:
             raise AcondProApiClientCommunicationError(
                 msg,
             ) from exception
+        except AcondProApiClientAuthenticationError as exception:
+            msg = f"Invalid credentials - {exception}"
+            raise AcondProApiClientAuthenticationError(
+                msg,
+            ) from exception
         except Exception as exception:  # pylint: disable=broad-except
             msg = f"Something really wrong happened! - {exception}"
             raise AcondProApiClientError(
