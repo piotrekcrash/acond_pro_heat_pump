@@ -54,8 +54,8 @@ class AcondProApiClient:
         self._ip_address = ip_address
         self._username = username
         self._password = password
-        self._session = session
-        aiohttp.ClientSession(cookie_jar=aiohttp.CookieJar(unsafe=True), connector=aiohttp.TCPConnector(ssl=ssl_context))
+        # self._session = session
+        self._session = aiohttp.ClientSession(cookie_jar=aiohttp.CookieJar(unsafe=True), connector=aiohttp.TCPConnector(ssl=ssl_context))
 
     async def async_get_data(self) -> Any:
         """Get data from the API."""
