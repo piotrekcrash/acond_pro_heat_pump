@@ -157,9 +157,8 @@ class AcondProApiClient:
                     response = await session.request(url=self._build_url(url), method=method, data=data, headers=headers, allow_redirects=False)
                     if response.status == 302:
                         LOGGER.error('AUTH after 302')
-                        response = await session.post(url=self._build_url(URL_LOGIN) , data=self.login_form())
+                        response = await session.post(url=self._build_url(URL_LOGIN) , data=self.login_form(), allow_redirects=False)
                         if response.status == 302:
-                            await response.read()
                             LOGGER.error('302 after AUTH')
                             raise AcondProApiClientAuthenticationError("Invalid credentials")
                     response = await session.request(url=self._build_url(url), method=method, data=data, headers=headers, allow_redirects=False)
