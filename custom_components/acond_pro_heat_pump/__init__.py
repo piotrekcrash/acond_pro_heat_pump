@@ -25,6 +25,7 @@ PLATFORMS: list[Platform] = [
     Platform.SENSOR,
     Platform.BINARY_SENSOR,
     Platform.SWITCH,
+    Platform.CLIMATE,
 ]
 
 ssl_context = ssl.create_default_context()
