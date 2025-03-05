@@ -80,6 +80,17 @@ class AcondProApiClient:
             url=URL_HOME,
         )
         return response
+    
+    async def async_set_value(self, name, value) -> Any:
+        LOGGER.error('SET_VALUE')
+        response = await self._api_txt_wrapper(
+            method="post",
+            url=URL_HOME,
+            data=self.value_update_form(name, value)
+        )
+        LOGGER.error(response)
+        return response
+
 
     async def _api_wrapper(
         self,
@@ -138,6 +149,11 @@ class AcondProApiClient:
         data = aiohttp.FormData(quote_fields=True, charset='utf-8')
         data.add_field("USER", self._username)
         data.add_field("PASS", self._password)
+        return data
+    
+    def value_update_form(self, name, value) -> aiohttp.FormData:
+        data = aiohttp.FormData(quote_fields=True, charset='utf-8')
+        data.add_field(name, value)
         return data
     
     def _build_url(self, url) -> str:
