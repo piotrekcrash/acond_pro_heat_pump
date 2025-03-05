@@ -1,25 +1,18 @@
 """Sample API Client."""
 
 from __future__ import annotations
-
 import socket
 from typing import Any
-
 from .const import LOGGER
-
 import aiohttp
 import ssl
 import async_timeout
 from bs4 import BeautifulSoup
-
+from .const import URL_LOGIN, URL_HOME
 
 ssl_context = ssl.create_default_context()
 ssl_context.check_hostname = False
 ssl_context.verify_mode = ssl.CERT_NONE
-
-
-from .const import URL_LOGIN, URL_HOME
-
 
 class AcondProApiClientError(Exception):
     """Exception to indicate a general API error."""

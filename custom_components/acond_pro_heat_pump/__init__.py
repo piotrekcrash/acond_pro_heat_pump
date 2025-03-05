@@ -6,24 +6,19 @@ https://github.com/ludeeus/acond_pro_heat_pump
 """
 
 from __future__ import annotations
-
 from datetime import timedelta
 from typing import TYPE_CHECKING
 import aiohttp
 import ssl
-
 from homeassistant.const import CONF_IP_ADDRESS, CONF_PASSWORD, CONF_USERNAME, Platform
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
 from homeassistant.loader import async_get_loaded_integration
-
 from .api import AcondProApiClient
 from .const import DOMAIN, LOGGER
 from .coordinator import AcondDataUpdateCoordinator
 from .data import AcondProData
-
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
-
     from .data import AcondProConfigEntry
 
 PLATFORMS: list[Platform] = [
@@ -37,7 +32,6 @@ ssl_context.check_hostname = False
 ssl_context.verify_mode = ssl.CERT_NONE
 
 
-# https://developers.home-assistant.io/docs/config_entries_index/#setting-up-an-entry
 async def async_setup_entry(
     hass: HomeAssistant,
     entry: AcondProConfigEntry,
@@ -50,7 +44,6 @@ async def async_setup_entry(
         update_interval=timedelta(seconds=30),
     )
     jar = aiohttp.CookieJar(unsafe=True)
-    # connector=aiohttp.TCPConnector(ssl=ssl_context)
     entry.runtime_data = AcondProData(
         client=AcondProApiClient(
             ip_address=entry.data[CONF_IP_ADDRESS],
@@ -70,14 +63,12 @@ async def async_setup_entry(
 
     return True
 
-
 async def async_unload_entry(
     hass: HomeAssistant,
     entry: AcondProConfigEntry,
 ) -> bool:
     """Handle removal of an entry."""
     return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
-
 
 async def async_reload_entry(
     hass: HomeAssistant,
