@@ -55,6 +55,7 @@ class AcondProApiClient:
         self._username = username
         self._password = password
         self._session = session
+        aiohttp.ClientSession(cookie_jar=aiohttp.CookieJar(unsafe=True), connector=aiohttp.TCPConnector(ssl=ssl_context))
 
     async def async_get_data(self) -> Any:
         """Get data from the API."""
@@ -150,9 +151,9 @@ class AcondProApiClient:
         """Get information from the API."""
         try:
             async with async_timeout.timeout(10):
-                cookie_jar = aiohttp.CookieJar(unsafe=True)
-                async with aiohttp.ClientSession(cookie_jar=cookie_jar, connector=aiohttp.TCPConnector(ssl=ssl_context)) as session:
-                # async with self._session as session:
+                # cookie_jar = aiohttp.CookieJar(unsafe=True)
+                # async with aiohttp.ClientSession(cookie_jar=cookie_jar, connector=aiohttp.TCPConnector(ssl=ssl_context)) as session:
+                async with self._session as session:
                     await session.get("https://" + self._ip_address + URL_LOGIN)
                     response = await session.post(url="https://" + self._ip_address + URL_LOGIN, data=self.login_form())
                     body = await response.read()
