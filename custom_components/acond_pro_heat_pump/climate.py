@@ -65,12 +65,12 @@ class AcondProClimate(AcondProEntity, ClimateEntity):
     @property
     def current_temperature(self) -> float | None:
         """Return the current temperature."""
-        return self.coordinator.data["__T46AA2571_REAL_.1f"]
+        return float(self.coordinator.data["__T46AA2571_REAL_.1f"])
 
     @property
     def target_temperature(self) -> float | None:
         """Return the temperature we try to reach."""
-        return self.coordinator.data["__T05D9E707_REAL_.1f"]
+        return float(self.coordinator.data["__T05D9E707_REAL_.1f"])
 
     @property
     def hvac_mode(self) -> str:
