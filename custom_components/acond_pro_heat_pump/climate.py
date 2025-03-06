@@ -89,3 +89,4 @@ class AcondProClimate(AcondProEntity, ClimateEntity):
         """Set new target hvac mode."""
         #await self.coordinator.api.set_hvac_mode(hvac_mode)
         # await self.coordinator.async_request_refresh()
+        # test
