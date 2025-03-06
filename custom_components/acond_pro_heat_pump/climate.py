@@ -65,17 +65,18 @@ class AcondProClimate(AcondProEntity, ClimateEntity):
     @property
     def current_temperature(self) -> float | None:
         """Return the current temperature."""
-        return self.coordinator.data.get("current_temperature")
+        return self.coordinator.data["__T46AA2571_REAL_.1f"]
 
     @property
     def target_temperature(self) -> float | None:
         """Return the temperature we try to reach."""
-        return self.coordinator.data.get("target_temperature")
+        return self.coordinator.data["__T05D9E707_REAL_.1f"]
 
     @property
     def hvac_mode(self) -> str:
         """Return hvac operation ie. heat, cool mode."""
-        return self.coordinator.data.get("hvac_mode", HVACMode.OFF)
+        # return self.coordinator.data.get("hvac_mode", HVACMode.OFF)
+        return HVACMode.OFF
 
     async def async_set_temperature(self, **kwargs) -> None:
         """Set new target temperature."""
@@ -86,5 +87,5 @@ class AcondProClimate(AcondProEntity, ClimateEntity):
 
     async def async_set_hvac_mode(self, hvac_mode: str) -> None:
         """Set new target hvac mode."""
-        await self.coordinator.api.set_hvac_mode(hvac_mode)
-        await self.coordinator.async_request_refresh()
+        #await self.coordinator.api.set_hvac_mode(hvac_mode)
+        # await self.coordinator.async_request_refresh()
