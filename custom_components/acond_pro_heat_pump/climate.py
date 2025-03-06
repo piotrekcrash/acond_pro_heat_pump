@@ -85,6 +85,7 @@ class AcondProClimate(AcondProEntity, ClimateEntity):
         # if temperature is not None:
         #     await self.coordinator.api.set_temperature(temperature)
         #     await self.coordinator.async_request_refresh()
+        #
         await self.coordinator.config_entry.runtime_data.client.async_set_value("__TBEC2C30E_REAL_.1f", temperature)
         await self.coordinator.async_request_refresh()
 
