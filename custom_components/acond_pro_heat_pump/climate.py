@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 from homeassistant.components.climate import ClimateEntity, ClimateEntityDescription
 from homeassistant.components.climate import ClimateEntityFeature
 from homeassistant.components.climate.const import HVACMode
-from homeassistant.const import ATTR_TEMPERATURE, TEMP_CELSIUS
+# from homeassistant.const import ATTR_TEMPERATURE, TEMP_CELSIUS
 
 from .entity import AcondProEntity
 
@@ -57,7 +57,7 @@ class AcondProClimate(AcondProEntity, ClimateEntity):
         self._attr_unique_id = entity_description.key
         self._attr_supported_features = ClimateEntityFeature.TARGET_TEMPERATURE
         self._attr_hvac_modes = [HVACMode.HEAT]
-        self._attr_temperature_unit = TEMP_CELSIUS
+        # self._attr_temperature_unit = TEMP_CELSIUS
         self._attr_min_temp = 7
         self._attr_max_temp = 35
 
@@ -78,10 +78,10 @@ class AcondProClimate(AcondProEntity, ClimateEntity):
 
     async def async_set_temperature(self, **kwargs) -> None:
         """Set new target temperature."""
-        temperature = kwargs.get(ATTR_TEMPERATURE)
-        if temperature is not None:
-            await self.coordinator.api.set_temperature(temperature)
-            await self.coordinator.async_request_refresh()
+        # temperature = kwargs.get(ATTR_TEMPERATURE)
+        # if temperature is not None:
+        #     await self.coordinator.api.set_temperature(temperature)
+        #     await self.coordinator.async_request_refresh()
 
     async def async_set_hvac_mode(self, hvac_mode: str) -> None:
         """Set new target hvac mode."""
