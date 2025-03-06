@@ -5,12 +5,8 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from homeassistant.components.climate import ClimateEntity, ClimateEntityDescription
-from homeassistant.components.climate.const import (
-    HVAC_MODE_HEAT,
-    HVAC_MODE_COOL,
-    HVAC_MODE_OFF,
-    SUPPORT_TARGET_TEMPERATURE,
-)
+from homeassistant.components.climate import ClimateEntityFeature
+from homeassistant.components.climate.const import HVACMode
 from homeassistant.const import ATTR_TEMPERATURE, TEMP_CELSIUS
 
 from .entity import AcondProEntity
@@ -59,8 +55,8 @@ class AcondProClimate(AcondProEntity, ClimateEntity):
         super().__init__(coordinator)
         self.entity_description = entity_description
         self._attr_unique_id = entity_description.key
-        self._attr_supported_features = SUPPORT_TARGET_TEMPERATURE
-        self._attr_hvac_modes = [HVAC_MODE_HEAT, HVAC_MODE_COOL, HVAC_MODE_OFF]
+        self._attr_supported_features = ClimateEntityFeature.TARGET_TEMPERATURE
+        self._attr_hvac_modes = [HVACMode.HEAT]
         self._attr_temperature_unit = TEMP_CELSIUS
         self._attr_min_temp = 7
         self._attr_max_temp = 35
@@ -78,7 +74,7 @@ class AcondProClimate(AcondProEntity, ClimateEntity):
     @property
     def hvac_mode(self) -> str:
         """Return hvac operation ie. heat, cool mode."""
-        return self.coordinator.data.get("hvac_mode", HVAC_MODE_OFF)
+        return self.coordinator.data.get("hvac_mode", HVACMode.OFF)
 
     async def async_set_temperature(self, **kwargs) -> None:
         """Set new target temperature."""
