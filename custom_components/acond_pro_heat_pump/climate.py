@@ -8,6 +8,7 @@ from homeassistant.components.climate import ClimateEntity, ClimateEntityDescrip
 from homeassistant.components.climate import ClimateEntityFeature
 from homeassistant.components.climate.const import HVACMode
 from homeassistant.const import UnitOfTemperature
+from homeassistant.const import ATTR_TEMPERATURE
 # from homeassistant.const import ATTR_TEMPERATURE, TEMP_CELSIUS
 
 from .entity import AcondProEntity
@@ -80,10 +81,12 @@ class AcondProClimate(AcondProEntity, ClimateEntity):
 
     async def async_set_temperature(self, **kwargs) -> None:
         """Set new target temperature."""
-        # temperature = kwargs.get(ATTR_TEMPERATURE)
+        temperature = kwargs.get(ATTR_TEMPERATURE)
         # if temperature is not None:
         #     await self.coordinator.api.set_temperature(temperature)
         #     await self.coordinator.async_request_refresh()
+        await self.coordinator.config_entry.runtime_data.client.async_set_value("__TBEC2C30E_REAL_.1f", temperature)
+        await self.coordinator.async_request_refresh()
 
     async def async_set_hvac_mode(self, hvac_mode: str) -> None:
         """Set new target hvac mode."""
