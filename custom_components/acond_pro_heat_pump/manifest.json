@@ -8,11 +8,5 @@
   "documentation": "https://github.com/piotrekcrash/acond_pro_heat_pump",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/piotrekcrash/acond_pro_heat_pump/issues",
-  "version": "0.1.0",
-  "platforms": [
-    "climate",
-    "sensor",
-    "binary_sensor",
-    "switch"
-  ]
+  "version": "0.1.0"
 }
