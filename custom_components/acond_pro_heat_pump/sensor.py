@@ -35,6 +35,36 @@ ENTITY_DESCRIPTIONS = (
         state_class="total_increasing",
         device_class="energy",
     ),
+    SensorEntityDescription(
+        key="__T61E4AC91_BOOL_i",
+        name="Sprezarka",
+        icon="mdi:format-quote-close",
+    ),
+    SensorEntityDescription(
+        key="__T9FF6A530_BOOL_i",
+        name="Wentylator",
+        icon="mdi:format-quote-close",
+    ),
+    SensorEntityDescription(
+        key="__T2BA2EA36_BOOL_i",
+        name="Pompa glowna",
+        icon="mdi:format-quote-close",
+    ),
+    SensorEntityDescription(
+        key="__TD3998BF7_BOOL_i",
+        name="Biwalencja",
+        icon="mdi:format-quote-close",
+    ),
+    SensorEntityDescription(
+        key="__T56A70EC9_BOOL_i",
+        name="Biwalencja 2",
+        icon="mdi:format-quote-close",
+    ),
+    SensorEntityDescription(
+        key="__T6F64FA70_BOOL_i",
+        name="Pompa obiegowa",
+        icon="mdi:format-quote-close",
+    ),
 )
 
 
