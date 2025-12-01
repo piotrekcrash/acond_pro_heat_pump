@@ -65,6 +65,11 @@ ENTITY_DESCRIPTIONS = (
         name="Pompa obiegowa",
         icon="mdi:format-quote-close",
     ),
+    SensorEntityDescription(
+        key="__TE1D81C79_BOOL_i",
+        name="Defrost",
+        icon="mdi:format-quote-close",
+    ),
 )
 
 
