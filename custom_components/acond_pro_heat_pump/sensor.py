@@ -36,6 +36,13 @@ ENTITY_DESCRIPTIONS = (
         device_class="energy",
     ),
     SensorEntityDescription(
+        key="__T880DC46F_BOOL_i",
+        name="Wydajnosc PC",
+        icon="mdi:format-quote-close",
+        native_unit_of_measurement="kW",
+        unit_of_measurement="kW",
+    ),
+    SensorEntityDescription(
         key="__T61E4AC91_BOOL_i",
         name="Sprezarka",
         icon="mdi:format-quote-close",
