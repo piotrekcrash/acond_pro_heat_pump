@@ -1,1 +1,203 @@
-"""Sample API Client.\n\nfrom __future__ import annotations\nimport socket\nfrom typing import Any\nfrom .const import LOGGER\nimport aiohttp\nimport ssl\nimport async_timeout\nfrom bs4 import BeautifulSoup\nfrom .const import URL_LOGIN, URL_HOME\n\n# HTTP status constant\nHTTP_FOUND = 302\n\nssl_context = ssl.create_default_context()\nssl_context.check_hostname = False\nssl_context.verify_mode = ssl.CERT_NONE\n\n\nclass AcondProApiClientError(Exception):\n    """Exception to indicate a general API error."""\n\n\nclass AcondProApiClientCommunicationError(AcondProApiClientError):\n    """Exception to indicate a communication error."""\n\n\nclass AcondProApiClientAuthenticationError(AcondProApiClientError):\n    """Exception to indicate an authentication error."""\n\n\ndef _verify_response_or_raise(response: aiohttp.ClientResponse) -> None:\n    """Verify that the response is valid."""\n    if response.status in (401, 403):\n        msg = "Invalid credentials"\n        raise AcondProApiClientAuthenticationError(msg)\n    response.raise_for_status()\n\n\nclass AcondProApiClient:\n    """Sample API Client."""\n\n    def __init__(self, ip_address: str, username: str, password: str, session: aiohttp.ClientSession) -> None:\n        """Sample API Client."""\n        self._ip_address = ip_address\n        self._username = username\n        self._password = password\n        self._cookie_jar = aiohttp.CookieJar(unsafe=True)\n        self._session = session\n\n    async def async_get_data(self) -> Any:\n        """Get data from the API."""\n        return await self._api_wrapper(method="get", url="https://jsonplaceholder.typicode.com/posts/1",)\n\n    async def async_set_title(self, value: str) -> Any:\n        """Set the title using the API."""\n        return await self._api_wrapper(method="patch", url="https://jsonplaceholder.typicode.com/posts/1", data={"title": value}, headers={"Content-type": "application/json; charset=UTF-8"},)\n\n    async def async_get_home(self) -> Any:\n        """Retrieve the home page and parse it as text."""\n        LOGGER.error("LOAD_DATA")\n        response = await self._api_txt_wrapper(method="get", url=URL_HOME,)\n        return response\n\n    async def async_set_value(self, name: str, value: str) -> Any:\n        """Set a named value on the device."""\n        LOGGER.error("SET_VALUE")\n        response = await self._api_txt_wrapper(method="post", url=URL_HOME, data=self.value_update_form(name, value),)\n        LOGGER.error(str(response))\n        return response\n\n    async def _api_wrapper(self, method: str, url: str, data: dict | None = None, headers: dict | None = None) -> Any:\n        """Get information from the API and return parsed JSON."""\n        try:\n            async with async_timeout.timeout(10):\n                response = await self._session.request(method=method, url=url, headers=headers, json=data,)\n                _verify_response_or_raise(response)\n                return await response.json()\n\n        except TimeoutError as exception:\n            msg = f"Timeout error fetching information - {exception}"\n            raise AcondProApiClientCommunicationError(msg) from exception\n        except (aiohttp.ClientError, socket.gaierror) as exception:\n            msg = f"Error fetching information - {exception}"\n            raise AcondProApiClientCommunicationError(msg) from exception\n        except Exception as exception:  # pylint: disable=broad-except\n            msg = f"Something really wrong happened! - {exception}"\n            raise AcondProApiClientError(msg) from exception\n\n    async def login(self) -> Any:\n        """Perform login and return parsed home page."""\n        LOGGER.error("LOGIN")\n        return await self._api_txt_wrapper(method="get", url=URL_HOME,)\n\n    def map_response(self, str_response: str) -> Any:\n        """Parse HTML/XML response and return a mapping of input names to values."""\n        soup = BeautifulSoup(str_response, "lxml-xml")\n        input_elements = soup.find_all("INPUT")\n        value_dict: dict[str, str | None] = {}\n        for input_elem in input_elements:\n            name = input_elem.get("NAME")\n            value = input_elem.get("VALUE")\n            value_dict[name] = value\n        return value_dict\n\n    def login_form(self) -> aiohttp.FormData:\n        data = aiohttp.FormData(quote_fields=True, charset="utf-8")\n        data.add_field("USER", self._username)\n        data.add_field("PASS", self._password)\n        return data\n\n    def value_update_form(self, name: str, value: str) -> aiohttp.FormData:\n        data = aiohttp.FormData(quote_fields=True, charset="utf-8")\n        data.add_field(name, value)\n        return data\n\n    def _build_url(self, url: str) -> str:\n        return "https://" + self._ip_address + url\n\n    async def _api_txt_wrapper(self, method: str, url: str, data: dict | None = None, headers: dict | None = None) -> Any:\n        """Get information from the API and return a parsed mapping from the text body."""\n        try:\n            async with async_timeout.timeout(10):\n                async with aiohttp.ClientSession(cookie_jar=self._cookie_jar, connector=aiohttp.TCPConnector(ssl=ssl_context)) as session:\n                    response = await session.request(url=self._build_url(url), method=method, data=data, headers=headers, allow_redirects=False,)\n\n                    if response.status == HTTP_FOUND:\n                        LOGGER.error("AUTH after 302")\n                        response = await session.post(url=self._build_url(URL_LOGIN), data=self.login_form(), allow_redirects=False,)\n\n                        if (response.status == HTTP_FOUND and response.headers.get("Location") == URL_LOGIN):\n                            LOGGER.error("302 after AUTH")\n                            msg = "Invalid credentials"\n                            raise AcondProApiClientAuthenticationError(msg)\n\n                    response = await session.request(url=self._build_url(url), method=method, data=data, headers=headers, allow_redirects=False,)\n                    body = await response.read()\n                    str_body = body.decode("utf-8", errors="replace")\n                    return self.map_response(str_body)\n        except TimeoutError as exception:\n            msg = f"Timeout error fetching information - {exception}"\n            raise AcondProApiClientCommunicationError(msg) from exception\n        except (aiohttp.ClientError, socket.gaierror) as exception:\n            msg = f"Error fetching information - {exception}"\n            raise AcondProApiClientCommunicationError(msg) from exception\n        except AcondProApiClientAuthenticationError as exception:\n            msg = f"Invalid credentials - {exception}"\n            raise AcondProApiClientAuthenticationError(msg) from exception\n        except Exception as exception:  # pylint: disable=broad-except\n            msg = f"Something really wrong happened! - {exception}"\n            raise AcondProApiClientError(msg) from exception\n\n
+"""Sample API Client."""
+
+from __future__ import annotations
+import socket
+from typing import Any
+from .const import LOGGER
+import aiohttp
+import ssl
+import async_timeout
+from bs4 import BeautifulSoup
+from .const import URL_LOGIN, URL_HOME
+
+ssl_context = ssl.create_default_context()
+ssl_context.check_hostname = False
+ssl_context.verify_mode = ssl.CERT_NONE
+
+class AcondProApiClientError(Exception):
+    """Exception to indicate a general API error."""
+
+
+class AcondProApiClientCommunicationError(
+    AcondProApiClientError,
+):
+    """Exception to indicate a communication error."""
+
+
+class AcondProApiClientAuthenticationError(
+    AcondProApiClientError,
+):
+    """Exception to indicate an authentication error."""
+
+
+def _verify_response_or_raise(response: aiohttp.ClientResponse) -> None:
+    """Verify that the response is valid."""
+    if response.status in (401, 403):
+        msg = "Invalid credentials"
+        raise AcondProApiClientAuthenticationError(
+            msg,
+        )
+    response.raise_for_status()
+
+
+class AcondProApiClient:
+    """Sample API Client."""
+
+    def __init__(
+        self,
+        ip_address: str,
+        username: str,
+        password: str,
+        session: aiohttp.ClientSession,
+    ) -> None:
+        """Sample API Client."""
+        self._ip_address = ip_address
+        self._username = username
+        self._password = password
+        self._cookie_jar = aiohttp.CookieJar(unsafe=True)
+        # self._session = aiohttp.ClientSession(cookie_jar=aiohttp.CookieJar(unsafe=True), connector=aiohttp.TCPConnector(ssl=ssl_context))
+
+    async def async_get_data(self) -> Any:
+        """Get data from the API."""
+        return await self._api_wrapper(
+            method="get",
+            url="https://jsonplaceholder.typicode.com/posts/1",
+        )
+
+    async def async_set_title(self, value: str) -> Any:
+        """Get data from the API."""
+        return await self._api_wrapper(
+            method="patch",
+            url="https://jsonplaceholder.typicode.com/posts/1",
+            data={"title": value},
+            headers={"Content-type": "application/json; charset=UTF-8"},
+        )
+    
+    async def async_get_home(self) -> Any:
+        LOGGER.error('LOAD_DATA')
+        response = await self._api_txt_wrapper(
+            method="get",
+            url=URL_HOME,
+        )
+        return response
+    
+    async def async_set_value(self, name, value) -> Any:
+        LOGGER.error('SET_VALUE')
+        response = await self._api_txt_wrapper(
+            method="post",
+            url=URL_HOME,
+            data=self.value_update_form(name, value)
+        )
+        LOGGER.error(response)
+        return response
+
+
+    async def _api_wrapper(
+        self,
+        method: str,
+        url: str,
+        data: dict | None = None,
+        headers: dict | None = None,
+    ) -> Any:
+        """Get information from the API."""
+        try:
+            async with async_timeout.timeout(10):
+                response = await self._session.request(
+                    method=method,
+                    url=url,
+                    headers=headers,
+                    json=data,
+                )
+                _verify_response_or_raise(response)
+                return await response.json()
+
+        except TimeoutError as exception:
+            msg = f"Timeout error fetching information - {exception}"
+            raise AcondProApiClientCommunicationError(
+                msg,
+            ) from exception
+        except (aiohttp.ClientError, socket.gaierror) as exception:
+            msg = f"Error fetching information - {exception}"
+            raise AcondProApiClientCommunicationError(
+                msg,
+            ) from exception
+        except Exception as exception:  # pylint: disable=broad-except
+            msg = f"Something really wrong happened! - {exception}"
+            raise AcondProApiClientError(
+                msg,
+            ) from exception
+    
+    async def login(self) -> Any:
+        """Get data from the API."""
+        LOGGER.error('LOGIN')
+        response = await self._api_txt_wrapper(
+            method="get",
+            url=URL_HOME,
+        )
+
+    def map_response(self, strResponse) -> Any:
+        soup = BeautifulSoup(strResponse, 'lxml-xml')
+        input_elements = soup.find_all('INPUT')
+        value_dict = {}
+        for input_elem in input_elements:
+            name = input_elem.get('NAME')
+            value = input_elem.get('VALUE')
+            value_dict[name] = value
+        return value_dict
+    
+    def login_form(self) -> aiohttp.FormData:
+        data = aiohttp.FormData(quote_fields=True, charset='utf-8')
+        data.add_field("USER", self._username)
+        data.add_field("PASS", self._password)
+        return data
+    
+    def value_update_form(self, name, value) -> aiohttp.FormData:
+        data = aiohttp.FormData(quote_fields=True, charset='utf-8')
+        data.add_field(name, value)
+        return data
+    
+    def _build_url(self, url) -> str:
+        return "https://" + self._ip_address + url
+
+    async def _api_txt_wrapper(
+        self,
+        method: str,
+        url: str,
+        data: dict | None = None,
+        headers: dict | None = None,
+    ) -> Any:
+        """Get information from the API."""
+        try:
+            async with async_timeout.timeout(10):
+                async with aiohttp.ClientSession(cookie_jar=self._cookie_jar, connector=aiohttp.TCPConnector(ssl=ssl_context)) as session:
+                    response = await session.request(url=self._build_url(url), method=method, data=data, headers=headers, allow_redirects=False)
+                    if response.status == 302:
+                        LOGGER.error('AUTH after 302')
+                        response = await session.post(url=self._build_url(URL_LOGIN) , data=self.login_form(), allow_redirects=False)
+                        if response.status == 302 and response.headers.get('Location') == URL_LOGIN:
+                            LOGGER.error('302 after AUTH')
+                            raise AcondProApiClientAuthenticationError("Invalid credentials")
+                    response = await session.request(url=self._build_url(url), method=method, data=data, headers=headers, allow_redirects=False)
+                    body = await response.read()
+                    strBody = body.decode('utf-8', errors='replace')
+                    return self.map_response(strBody)
+        except TimeoutError as exception:
+            msg = f"Timeout error fetching information - {exception}"
+            raise AcondProApiClientCommunicationError(
+                msg,
+            ) from exception
+        except (aiohttp.ClientError, socket.gaierror) as exception:
+            msg = f"Error fetching information - {exception}"
+            raise AcondProApiClientCommunicationError(
+                msg,
+            ) from exception
+        except AcondProApiClientAuthenticationError as exception:
+            msg = f"Invalid credentials - {exception}"
+            raise AcondProApiClientAuthenticationError(
+                msg,
+            ) from exception
+        except Exception as exception:  # pylint: disable=broad-except
+            msg = f"Something really wrong happened! - {exception}"
+            raise AcondProApiClientError(
+                msg,
+            ) from exception
