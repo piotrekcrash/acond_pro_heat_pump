@@ -27,6 +27,11 @@ ENTITY_DESCRIPTIONS = (
         name="Acond Pro Heat Pump",
         icon="mdi:heat-pump",
     ),
+    ClimateEntityDescription(
+        key="acond_pro_climate_2",
+        name="Acond Pro Heat Pump",
+        icon="mdi:heat-pump",
+    ),
 )
 
 
