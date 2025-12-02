@@ -56,6 +56,20 @@ ENTITY_DESCRIPTIONS = (
         native_unit_of_measurement="°C",
         unit_of_measurement="°C",
     ),
+    SensorEntityDescription(
+        key="__T50A32455_REAL_.1f",
+        name="Heat Pump Water Inbound Temperature",
+        icon="mdi:thermometer",
+        native_unit_of_measurement="°C",
+        unit_of_measurement="°C",
+    ),
+    SensorEntityDescription(
+        key="__T9E13248E_REAL_.1f",
+        name="Heat Pump Water Outbound Temperature",
+        icon="mdi:thermometer",
+        native_unit_of_measurement="°C",
+        unit_of_measurement="°C",
+    ),
 )
 
 
