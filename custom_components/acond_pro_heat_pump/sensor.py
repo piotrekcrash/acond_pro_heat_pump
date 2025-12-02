@@ -52,11 +52,11 @@ ENTITY_DESCRIPTIONS = (
         name="Wentylator",
         icon="mdi:format-quote-close",
     ),
-    SensorEntityDescription(
-        key="__T2BA2EA36_BOOL_i",
-        name="Pompa glowna",
-        icon="mdi:format-quote-close",
-    ),
+    # SensorEntityDescription(
+    #    key="__T2BA2EA36_BOOL_i",
+    #    name="Pompa glowna",
+    #    icon="mdi:format-quote-close",
+    #),
     SensorEntityDescription(
         key="__TD3998BF7_BOOL_i",
         name="Biwalencja",
@@ -67,11 +67,11 @@ ENTITY_DESCRIPTIONS = (
         name="Biwalencja 2",
         icon="mdi:format-quote-close",
     ),
-    SensorEntityDescription(
-        key="__T6F64FA70_BOOL_i",
-        name="Pompa obiegowa",
-        icon="mdi:format-quote-close",
-    ),
+    #SensorEntityDescription(
+    #    key="__T6F64FA70_BOOL_i",
+    #    name="Pompa obiegowa",
+    #    icon="mdi:format-quote-close",
+    #),
     SensorEntityDescription(
         key="__TE1D81C79_BOOL_i",
         name="Defrost",
