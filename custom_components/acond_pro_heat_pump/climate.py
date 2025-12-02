@@ -37,6 +37,12 @@ ENTITY_DESCRIPTIONS_BOILER = (
     ),
 )
 
+BOILER_FEATURES = (
+    ClimateEntityFeature.TARGET_TEMPERATURE |
+    ClimateEntityFeature.TURN_ON |
+    ClimateEntityFeature.TURN_OFF
+)
+
 
 async def async_setup_entry(
     hass: HomeAssistant,  # noqa: ARG001 Unused function argument: `hass`
@@ -119,7 +125,7 @@ class AcondProClimateBoiler(AcondProEntity, ClimateEntity):
         super().__init__(coordinator)
         self.entity_description = entity_description
         self._attr_unique_id = entity_description.key
-        self._attr_supported_features = ClimateEntityFeature.TARGET_TEMPERATURE
+        self._attr_supported_features = BOILER_FEATURES
         self._attr_hvac_modes = [HVACMode.HEAT]
         self._attr_temperature_unit = UnitOfTemperature.CELSIUS
         self._attr_min_temp = 30
@@ -156,3 +162,8 @@ class AcondProClimateBoiler(AcondProEntity, ClimateEntity):
         #await self.coordinator.api.set_hvac_mode(hvac_mode)
         # await self.coordinator.async_request_refresh()
         # test
+    async def async_turn_on(self) -> None:
+        str(1)
+
+    async def async_turn_off(self) -> None:
+        str(2)
