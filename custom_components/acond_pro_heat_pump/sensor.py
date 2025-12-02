@@ -42,6 +42,20 @@ ENTITY_DESCRIPTIONS = (
         native_unit_of_measurement="kW",
         unit_of_measurement="kW",
     ),
+    SensorEntityDescription(
+        key="__T033A2538_REAL_.1f",
+        name="Outdoor Temperature",
+        icon="mdi:thermometer",
+        native_unit_of_measurement="°C",
+        unit_of_measurement="°C",
+    ),
+    SensorEntityDescription(
+        key="__TDE3BFC02_REAL_.1f",
+        name="Outdoor Temperature Average",
+        icon="mdi:thermometer",
+        native_unit_of_measurement="°C",
+        unit_of_measurement="°C",
+    ),
 )
 
 
