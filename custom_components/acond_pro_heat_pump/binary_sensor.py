@@ -21,9 +21,14 @@ if TYPE_CHECKING:
 
 ENTITY_DESCRIPTIONS = (
     BinarySensorEntityDescription(
-        key="acond_pro_heat_pump",
-        name="Acond Pro Heat Pump Binary Sensor",
-        device_class=BinarySensorDeviceClass.CONNECTIVITY,
+        key="__T2BA2EA36_BOOL_i",
+        name="Pompa glowna bin",
+        device_class=BinarySensorDeviceClass.RUNNING,
+    ),
+    BinarySensorEntityDescription(
+        key="__T6F64FA70_BOOL_i",
+        name="Pompa obiegowa bin",
+        device_class=BinarySensorDeviceClass.RUNNING,
     ),
 )
 
@@ -58,4 +63,5 @@ class AcondProBinarySensor(AcondProEntity, BinarySensorEntity):
     @property
     def is_on(self) -> bool:
         """Return true if the binary_sensor is on."""
-        return self.coordinator.data.get("title", "") == "foo"
+    #    return self.coordinator.data.get("title", "") == "foo"
+        return self.coordinator.data[self.entity_description.key] == "1"
