@@ -1,7 +1,6 @@
 """Sample API Client."""
 
 from __future__ import annotations
-import asyncio
 import socket
 from typing import Any
 from .const import LOGGER, URL_LOGIN, URL_HOME
@@ -40,8 +39,7 @@ def _verify_response_or_raise(response: aiohttp.ClientResponse) -> None:
 class AcondProApiClient:
     """Sample API Client."""
 
-    def __init__(
-        self,
+    def __init__(self,
         ip_address: str,
         username: str,
         password: str,
@@ -107,7 +105,7 @@ class AcondProApiClient:
                 _verify_response_or_raise(response)
                 return await response.json()
 
-        except asyncio.TimeoutError as exception:
+        except TimeoutError as exception:
             msg = f"Timeout error fetching information - {exception}"
             raise AcondProApiClientCommunicationError(msg) from exception
         except (aiohttp.ClientError, socket.gaierror) as exception:
@@ -198,7 +196,7 @@ class AcondProApiClient:
                     body = await response.read()
                     str_body = body.decode("utf-8", errors="replace")
                     return self.map_response(str_body)
-        except asyncio.TimeoutError as exception:
+        except TimeoutError as exception:
             msg = f"Timeout error fetching information - {exception}"
             raise AcondProApiClientCommunicationError(msg) from exception
         except (aiohttp.ClientError, socket.gaierror) as exception:
@@ -210,4 +208,3 @@ class AcondProApiClient:
         except Exception as exception:  # pylint: disable=broad-except
             msg = f"Something really wrong happened! - {exception}"
             raise AcondProApiClientError(msg) from exception
-
