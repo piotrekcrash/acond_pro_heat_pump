@@ -24,11 +24,13 @@ ENTITY_DESCRIPTIONS = (
         key="__T2BA2EA36_BOOL_i",
         name="Pompa glowna bin",
         device_class=BinarySensorDeviceClass.RUNNING,
+        icon="mdi:pump",
     ),
     BinarySensorEntityDescription(
         key="__T6F64FA70_BOOL_i",
         name="Pompa obiegowa bin",
         device_class=BinarySensorDeviceClass.RUNNING,
+        icon="mdi:pump",
     ),
 )
 
@@ -59,6 +61,7 @@ class AcondProBinarySensor(AcondProEntity, BinarySensorEntity):
         """Initialize the binary_sensor class."""
         super().__init__(coordinator)
         self.entity_description = entity_description
+        self._attr_unique_id = entity_description.key
 
     @property
     def is_on(self) -> bool:
