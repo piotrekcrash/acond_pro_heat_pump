@@ -19,7 +19,7 @@ if TYPE_CHECKING:
 ENTITY_DESCRIPTIONS = (
     SensorEntityDescription(
         key="__TA725D6FD_REAL_.0f",
-        name="Acond Electric Enery",
+        name="Electric Energy",
         icon="mdi:format-quote-close",
         native_unit_of_measurement="kWh",
         unit_of_measurement="kWh",
@@ -28,7 +28,7 @@ ENTITY_DESCRIPTIONS = (
     ),
     SensorEntityDescription(
         key="__T6BEBB72C_REAL_.0f",
-        name="Acond Thermal Enery",
+        name="Thermal Energy",
         icon="mdi:format-quote-close",
         native_unit_of_measurement="GJ",
         unit_of_measurement="GJ",
@@ -37,45 +37,10 @@ ENTITY_DESCRIPTIONS = (
     ),
     SensorEntityDescription(
         key="__TD50B2FF2_REAL_.2f",
-        name="Wydajnosc PC",
+        name="Pump Efficiency",
         icon="mdi:format-quote-close",
         native_unit_of_measurement="kW",
         unit_of_measurement="kW",
-    ),
-    SensorEntityDescription(
-        key="__T61E4AC91_BOOL_i",
-        name="Sprezarka",
-        icon="mdi:format-quote-close",
-    ),
-    SensorEntityDescription(
-        key="__T9FF6A530_BOOL_i",
-        name="Wentylator",
-        icon="mdi:format-quote-close",
-    ),
-    # SensorEntityDescription(
-    #    key="__T2BA2EA36_BOOL_i",
-    #    name="Pompa glowna",
-    #    icon="mdi:format-quote-close",
-    #),
-    SensorEntityDescription(
-        key="__TD3998BF7_BOOL_i",
-        name="Biwalencja",
-        icon="mdi:format-quote-close",
-    ),
-    SensorEntityDescription(
-        key="__T56A70EC9_BOOL_i",
-        name="Biwalencja 2",
-        icon="mdi:format-quote-close",
-    ),
-    #SensorEntityDescription(
-    #    key="__T6F64FA70_BOOL_i",
-    #    name="Pompa obiegowa",
-    #    icon="mdi:format-quote-close",
-    #),
-    SensorEntityDescription(
-        key="__TE1D81C79_BOOL_i",
-        name="Defrost",
-        icon="mdi:format-quote-close",
     ),
 )
 

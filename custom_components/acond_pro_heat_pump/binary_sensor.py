@@ -22,16 +22,41 @@ if TYPE_CHECKING:
 ENTITY_DESCRIPTIONS = (
     BinarySensorEntityDescription(
         key="__T2BA2EA36_BOOL_i",
-        name="Pompa glowna bin",
+        name="Main Pump",
         device_class=BinarySensorDeviceClass.RUNNING,
         icon="mdi:pump",
     ),
     BinarySensorEntityDescription(
         key="__T6F64FA70_BOOL_i",
-        name="Pompa obiegowa bin",
+        name="Circulation Pump",
         device_class=BinarySensorDeviceClass.RUNNING,
         icon="mdi:pump",
     ),
+    BinarySensorEntityDescription(
+        key="__TE1D81C79_BOOL_i",
+        name="Defrost",
+        icon="mdi:snowflake-melt",
+    ),
+    BinarySensorEntityDescription(
+        key="__TD3998BF7_BOOL_i",
+        name="Bivalence 1",
+        icon="mdi:heat-wave",
+    ),
+    BinarySensorEntityDescription(
+        key="__T56A70EC9_BOOL_i",
+        name="Bivalence 1",
+        icon="mdi:heat-wave",
+    ),
+    BinarySensorEntityDescription(
+        key="__T61E4AC91_BOOL_i",
+        name="Compressor",
+        icon="mdi:heat-pump",
+    ),
+    BinarySensorEntityDescription(
+        key="__T9FF6A530_BOOL_i",
+        name="Fan",
+        icon="mdi:fan",
+    ), 
 )
 
 
