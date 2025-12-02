@@ -29,7 +29,7 @@ ENTITY_DESCRIPTIONS = (
     SensorEntityDescription(
         key="__T6BEBB72C_REAL_.0f",
         name="Thermal Energy",
-        icon="mdi:format-water-boiler",
+        icon="mdi:water-boiler",
         native_unit_of_measurement="GJ",
         unit_of_measurement="GJ",
         state_class="total_increasing",
