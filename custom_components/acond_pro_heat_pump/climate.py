@@ -27,9 +27,12 @@ ENTITY_DESCRIPTIONS = (
         name="Acond Pro Heat Pump",
         icon="mdi:heat-pump",
     ),
+)
+
+ENTITY_DESCRIPTIONS_BOILER = (
     ClimateEntityDescription(
-        key="acond_pro_climate_2",
-        name="Acond Pro Heat Pump",
+        key="acond_pro_boiler",
+        name="Acond Pro Boiler",
         icon="mdi:heat-pump",
     ),
 )
@@ -47,6 +50,13 @@ async def async_setup_entry(
             entity_description=entity_description,
         )
         for entity_description in ENTITY_DESCRIPTIONS
+    )
+    async_add_entities(
+        AcondProClimate(
+            coordinator=entry.runtime_data.coordinator,
+            entity_description=entity_description,
+        )
+        for entity_description in ENTITY_DESCRIPTIONS_BOILER
     )
 
 
