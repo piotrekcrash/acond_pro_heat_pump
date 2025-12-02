@@ -126,7 +126,7 @@ class AcondProClimateBoiler(AcondProEntity, ClimateEntity):
         self.entity_description = entity_description
         self._attr_unique_id = entity_description.key
         self._attr_supported_features = BOILER_FEATURES
-        self._attr_hvac_modes = [HVACMode.HEAT]
+        self._attr_hvac_modes = [HVACMode.OFF, HVACMode.HEAT]
         self._attr_temperature_unit = UnitOfTemperature.CELSIUS
         self._attr_min_temp = 30
         self._attr_max_temp = 50
