@@ -77,7 +77,7 @@ class AcondProClimate(AcondProEntity, ClimateEntity):
     def hvac_mode(self) -> str:
         """Return hvac operation ie. heat, cool mode."""
         # return self.coordinator.data.get("hvac_mode", HVACMode.OFF)
-        return HVACMode.OFF
+        return HVACMode.HEAT
 
     async def async_set_temperature(self, **kwargs) -> None:
         """Set new target temperature."""
