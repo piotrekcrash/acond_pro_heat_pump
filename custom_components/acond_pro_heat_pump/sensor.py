@@ -20,7 +20,7 @@ ENTITY_DESCRIPTIONS = (
     SensorEntityDescription(
         key="__TA725D6FD_REAL_.0f",
         name="Electric Energy",
-        icon="mdi:format-quote-close",
+        icon="mdi:lightning-bolt",
         native_unit_of_measurement="kWh",
         unit_of_measurement="kWh",
         state_class="total_increasing",
@@ -29,7 +29,7 @@ ENTITY_DESCRIPTIONS = (
     SensorEntityDescription(
         key="__T6BEBB72C_REAL_.0f",
         name="Thermal Energy",
-        icon="mdi:format-quote-close",
+        icon="mdi:format-water-boiler",
         native_unit_of_measurement="GJ",
         unit_of_measurement="GJ",
         state_class="total_increasing",
@@ -38,7 +38,7 @@ ENTITY_DESCRIPTIONS = (
     SensorEntityDescription(
         key="__TD50B2FF2_REAL_.2f",
         name="Pump Efficiency",
-        icon="mdi:format-quote-close",
+        icon="mdi:lightning-bolt",
         native_unit_of_measurement="kW",
         unit_of_measurement="kW",
     ),
