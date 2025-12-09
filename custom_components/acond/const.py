@@ -4,7 +4,7 @@ from logging import Logger, getLogger
 
 LOGGER: Logger = getLogger(__package__)
 
-DOMAIN = "acond_pro_heat_pump"
+DOMAIN = "acond"
 ATTRIBUTION = "Data provided by http://jsonplaceholder.typicode.com/"
 
 URL_LOGIN = "/SYSWWW/LOGIN.XML"
