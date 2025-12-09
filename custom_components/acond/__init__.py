@@ -1,8 +1,8 @@
 """
-Custom integration to integrate acond_pro_heat_pump with Home Assistant.
+Custom integration to integrate acond with Home Assistant.
 
 For more details about this integration, please refer to
-https://github.com/ludeeus/acond_pro_heat_pump
+https://github.com/ludeeus/acond
 """
 
 from __future__ import annotations

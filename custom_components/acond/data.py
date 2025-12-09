@@ -1,4 +1,4 @@
-"""Custom types for acond_pro_heat_pump."""
+"""Custom types for acond."""
 
 from __future__ import annotations
 

@@ -1,4 +1,4 @@
-"""Sensor platform for acond_pro_heat_pump."""
+"""Sensor platform for acond."""
 
 from __future__ import annotations
 
@@ -89,7 +89,7 @@ async def async_setup_entry(
 
 
 class AcondProSensor(AcondProEntity, SensorEntity):
-    """acond_pro_heat_pump Sensor class."""
+    """acond Sensor class."""
 
     def __init__(
         self,

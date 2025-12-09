@@ -1,4 +1,4 @@
-"""Climate platform for acond_pro_heat_pump."""
+"""Climate platform for acond."""
 
 from __future__ import annotations
 
@@ -67,7 +67,7 @@ async def async_setup_entry(
 
 
 class AcondProClimate(AcondProEntity, ClimateEntity):
-    """acond_pro_heat_pump Climate class."""
+    """acond Climate class."""
 
     def __init__(
         self,

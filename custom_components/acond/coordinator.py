@@ -1,4 +1,4 @@
-"""DataUpdateCoordinator for acond_pro_heat_pump."""
+"""DataUpdateCoordinator for acond."""
 
 from __future__ import annotations
 from typing import TYPE_CHECKING, Any

@@ -1,4 +1,4 @@
-"""Switch platform for acond_pro_heat_pump."""
+"""Switch platform for acond."""
 
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 
 ENTITY_DESCRIPTIONS = (
     SwitchEntityDescription(
-        key="acond_pro_heat_pump",
+        key="acond",
         name="Integration Switch TEST",
         icon="mdi:format-quote-close",
     ),
@@ -40,7 +40,7 @@ async def async_setup_entry(
 
 
 class AcondProSwitch(AcondProEntity, SwitchEntity):
-    """acond_pro_heat_pump switch class."""
+    """acond switch class."""
 
     def __init__(
         self,

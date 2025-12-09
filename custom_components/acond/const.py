@@ -1,4 +1,4 @@
-"""Constants for acond_pro_heat_pump."""
+"""Constants for acond."""
 
 from logging import Logger, getLogger
 

@@ -9,4 +9,4 @@ homeassistant:
 logger:
   default: info
   logs:
-    custom_components.acond_pro_heat_pump: debug
+    custom_components.acond: debug

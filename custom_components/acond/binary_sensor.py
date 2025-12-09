@@ -1,4 +1,4 @@
-"""Binary sensor platform for acond_pro_heat_pump."""
+"""Binary sensor platform for acond."""
 
 from __future__ import annotations
 
@@ -76,7 +76,7 @@ async def async_setup_entry(
 
 
 class AcondProBinarySensor(AcondProEntity, BinarySensorEntity):
-    """acond_pro_heat_pump binary_sensor class."""
+    """acond binary_sensor class."""
 
     def __init__(
         self,
