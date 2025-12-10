@@ -6,7 +6,7 @@
                 "data": {
                     "username": "Username",
                     "password": "Password",
-                    "ip_address": "IP Address"
+                    "ip": "IP Address"
                 }
             }
         },
