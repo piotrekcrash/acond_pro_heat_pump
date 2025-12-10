@@ -58,10 +58,15 @@ class AcondProSwitch(AcondProEntity, SwitchEntity):
 
     async def async_turn_on(self, **_: Any) -> None:
         """Turn on the switch."""
-        await self.coordinator.config_entry.runtime_data.client.async_set_value("__TBEC2C30E_REAL_.1f","20.1")
+        await (
+            self.coordinator.config_entry
+            .runtime_data.client.async_set_value("__TBEC2C30E_REAL_.1f","20.1")
+        )
         await self.coordinator.async_request_refresh()
 
     async def async_turn_off(self, **_: Any) -> None:
         """Turn off the switch."""
-        await self.coordinator.config_entry.runtime_data.client.async_set_value("__TBEC2C30E_REAL_.1f","20.9")
+        await (
+            self.coordinator.config_entry
+            .runtime_data.client.async_set_value("__TBEC2C30E_REAL_.1f","20.9"))
         await self.coordinator.async_request_refresh()
