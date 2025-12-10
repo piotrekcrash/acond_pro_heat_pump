@@ -39,9 +39,9 @@ ENTITY_DESCRIPTIONS_BOILER = (
 )
 
 BOILER_FEATURES = (
-    ClimateEntityFeature.TARGET_TEMPERATURE |
-    ClimateEntityFeature.TURN_ON |
-    ClimateEntityFeature.TURN_OFF
+    ClimateEntityFeature.TARGET_TEMPERATURE
+    | ClimateEntityFeature.TURN_ON
+    | ClimateEntityFeature.TURN_OFF
 )
 
 
@@ -103,17 +103,14 @@ class AcondProClimate(AcondProEntity, ClimateEntity):
     async def async_set_temperature(self, **kwargs: Any) -> None:
         """Set new target temperature."""
         temperature = kwargs.get(ATTR_TEMPERATURE)
-        await (
-            self.coordinator
-            .config_entry
-            .runtime_data
-            .client
-            .async_set_value("__TBEC2C30E_REAL_.1f", temperature)
+        await self.coordinator.config_entry.runtime_data.client.async_set_value(
+            "__TBEC2C30E_REAL_.1f", temperature
         )
         await self.coordinator.async_request_refresh()
 
     async def async_set_hvac_mode(self, hvac_mode: str) -> None:
         """Set new target hvac mode."""
+
 
 class AcondProClimateBoiler(AcondProEntity, ClimateEntity):
     """acond boiler Climate class."""
@@ -151,17 +148,14 @@ class AcondProClimateBoiler(AcondProEntity, ClimateEntity):
     async def async_set_temperature(self, **kwargs: Any) -> None:
         """Set new target temperature."""
         temperature = kwargs.get(ATTR_TEMPERATURE)
-        await (
-            self.coordinator
-            .config_entry
-            .runtime_data
-            .client
-            .async_set_value("__T3B27E86E_REAL_.1f", temperature)
+        await self.coordinator.config_entry.runtime_data.client.async_set_value(
+            "__T3B27E86E_REAL_.1f", temperature
         )
         await self.coordinator.async_request_refresh()
 
     async def async_set_hvac_mode(self, hvac_mode: str) -> None:
         """Set new target hvac mode."""
+
     async def async_turn_on(self) -> None:
         """Set async on."""
         str(1)

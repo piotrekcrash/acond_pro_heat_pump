@@ -15,6 +15,7 @@ from .api import (
 if TYPE_CHECKING:
     from .data import AcondProConfigEntry
 
+
 class AcondDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching data from the API."""
 

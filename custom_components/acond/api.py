@@ -42,7 +42,8 @@ def _verify_response_or_raise(response: aiohttp.ClientResponse) -> None:
 class AcondProApiClient:
     """Sample API Client."""
 
-    def __init__(self,
+    def __init__(
+        self,
         ip_address: str,
         username: str,
         password: str,
@@ -162,10 +163,13 @@ class AcondProApiClient:
     ) -> Any:
         """Get information from the API."""
         try:
-            async with async_timeout.timeout(10), aiohttp.ClientSession(
-                cookie_jar=self._cookie_jar,
-                connector=aiohttp.TCPConnector(ssl=ssl_context),
-            ) as session:
+            async with (
+                async_timeout.timeout(10),
+                aiohttp.ClientSession(
+                    cookie_jar=self._cookie_jar,
+                    connector=aiohttp.TCPConnector(ssl=ssl_context),
+                ) as session,
+            ):
                 response = await session.request(
                     url=self._build_url(url),
                     method=method,

@@ -55,7 +55,7 @@ async def async_setup_entry(
             ip_address=entry.data[CONF_IP_ADDRESS],
             username=entry.data[CONF_USERNAME],
             password=entry.data[CONF_PASSWORD],
-            session=aiohttp.ClientSession(cookie_jar=cookie_jar, connector=tcp_conn)
+            session=aiohttp.ClientSession(cookie_jar=cookie_jar, connector=tcp_conn),
         ),
         integration=async_get_loaded_integration(hass, entry.domain),
         coordinator=coordinator,
@@ -68,12 +68,14 @@ async def async_setup_entry(
 
     return True
 
+
 async def async_unload_entry(
     hass: HomeAssistant,
     entry: AcondProConfigEntry,
 ) -> bool:
     """Handle removal of an entry."""
     return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+
 
 async def async_reload_entry(
     hass: HomeAssistant,
