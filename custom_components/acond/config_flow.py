@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import voluptuous as vol
 from homeassistant import config_entries
-from homeassistant.const import CONF_IP_ADDRESS, CONF_PASSWORD, CONF_USERNAME
+from homeassistant.const import CONF_IP_ADDRESS, CONF_NAME, CONF_PASSWORD, CONF_USERNAME
 from homeassistant.helpers import selector
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
 from slugify import slugify
@@ -16,6 +16,8 @@ from .api import (
     AcondProApiClientError,
 )
 from .const import DOMAIN, LOGGER
+
+DEFAULT_NAME = "Acond Heat Pump"
 
 
 class AcondFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
@@ -83,6 +85,7 @@ class AcondFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                             type=selector.TextSelectorType.PASSWORD,
                         ),
                     ),
+                    vol.Required(CONF_NAME, default=DEFAULT_NAME): str,
                 },
             ),
             errors=_errors,
