@@ -1,12 +1,14 @@
 """Adds config flow for Acond."""
 
 from __future__ import annotations
+
 import voluptuous as vol
 from homeassistant import config_entries
-from homeassistant.const import CONF_PASSWORD, CONF_USERNAME, CONF_IP_ADDRESS
+from homeassistant.const import CONF_IP_ADDRESS, CONF_PASSWORD, CONF_USERNAME
 from homeassistant.helpers import selector
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
 from slugify import slugify
+
 from .api import (
     AcondProApiClient,
     AcondProApiClientAuthenticationError,
@@ -30,7 +32,7 @@ class AcondFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             try:
                 await self._test_credentials(
-                    ip_address=user_input[CONF_IP_ADDRESS],
+                    ip=user_input[CONF_IP_ADDRESS],
                     username=user_input[CONF_USERNAME],
                     password=user_input[CONF_PASSWORD],
                 )
@@ -86,10 +88,10 @@ class AcondFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             errors=_errors,
         )
 
-    async def _test_credentials(self, username: str, password: str, ip_address: str) -> None:
+    async def _test_credentials(self, username: str, password: str, ip: str) -> None:
         """Validate credentials."""
         client = AcondProApiClient(
-            ip_address=ip_address,
+            ip=ip,
             username=username,
             password=password,
             session=async_create_clientsession(self.hass, verify_ssl=False),
