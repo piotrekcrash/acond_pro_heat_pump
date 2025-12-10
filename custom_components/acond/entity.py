@@ -23,7 +23,8 @@ class AcondProEntity(CoordinatorEntity[AcondDataUpdateCoordinator]):
             identifiers={
                 (
                     coordinator.config_entry.domain,
-                    coordinator.config_entry.entry_id,
+                    #coordinator.config_entry.entry_id,
+                    "MAC_ADDRES_OF_DEVICE"
                 ),
             },
             default_name="Heat Pump",
