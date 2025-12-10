@@ -149,7 +149,7 @@ class AcondProApiClient:
         return data
 
     def _build_url(self, url: str) -> str:
-        return "https://" + self._ip_address + url
+        return "https://" + self._ip + url
 
     def _raise_auth_error(self, message: str) -> None:
         raise AcondProApiClientAuthenticationError(message)
