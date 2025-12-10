@@ -159,46 +159,45 @@ class AcondProApiClient:
     ) -> Any:
         """Get information from the API."""
         try:
-            async with async_timeout.timeout(10):
-                async with aiohttp.ClientSession(
-                    cookie_jar=self._cookie_jar,
-                    connector=aiohttp.TCPConnector(ssl=ssl_context),
-                ) as session:
-                    response = await session.request(
-                        url=self._build_url(url),
-                        method=method,
-                        data=data,
-                        headers=headers,
+            async with async_timeout.timeout(10), aiohttp.ClientSession(
+                cookie_jar=self._cookie_jar,
+                connector=aiohttp.TCPConnector(ssl=ssl_context),
+            ) as session:
+                response = await session.request(
+                    url=self._build_url(url),
+                    method=method,
+                    data=data,
+                    headers=headers,
+                    allow_redirects=False,
+                )
+                if response.status == HTTP_FOUND:
+                    LOGGER.error("AUTH after 302")
+                    response = await session.post(
+                        url=self._build_url(URL_LOGIN),
+                        data=self.login_form(),
                         allow_redirects=False,
                     )
-                    if response.status == HTTP_FOUND:
-                        LOGGER.error("AUTH after 302")
-                        response = await session.post(
-                            url=self._build_url(URL_LOGIN),
-                            data=self.login_form(),
-                            allow_redirects=False,
-                        )
-                        if (
-                            response.status == HTTP_FOUND
-                            and response.headers.get("Location") == URL_LOGIN
-                        ):
-                            LOGGER.error("302 after AUTH")
-                            msg = "Invalid credentials"
+                    if (
+                        response.status == HTTP_FOUND
+                        and response.headers.get("Location") == URL_LOGIN
+                    ):
+                        LOGGER.error("302 after AUTH")
+                        msg = "Invalid credentials"
 
-                            def _raise_auth_error(message: str) -> None:
-                                raise AcondProApiClientAuthenticationError(message)
+                        def _raise_auth_error(message: str) -> None:
+                            raise AcondProApiClientAuthenticationError(message)
 
-                            _raise_auth_error(msg)
-                    response = await session.request(
-                        url=self._build_url(url),
-                        method=method,
-                        data=data,
-                        headers=headers,
-                        allow_redirects=False,
-                    )
-                    body = await response.read()
-                    str_body = body.decode("utf-8", errors="replace")
-                    return self.map_response(str_body)
+                        _raise_auth_error(msg)
+                response = await session.request(
+                    url=self._build_url(url),
+                    method=method,
+                    data=data,
+                    headers=headers,
+                    allow_redirects=False,
+                )
+                body = await response.read()
+                str_body = body.decode("utf-8", errors="replace")
+                return self.map_response(str_body)
         except TimeoutError as exception:
             msg = f"Timeout error fetching information - {exception}"
             raise AcondProApiClientCommunicationError(msg) from exception
