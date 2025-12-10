@@ -17,12 +17,13 @@ class AcondProEntity(CoordinatorEntity[AcondDataUpdateCoordinator]):
     def __init__(self, coordinator: AcondDataUpdateCoordinator) -> None:
         """Initialize."""
         super().__init__(coordinator)
-        self._attr_unique_id = coordinator.config_entry.entry_id
+        entry = coordinator.config_entry
+        self._attr_unique_id = entry.entry_id
         self._attr_device_info = DeviceInfo(
-            identifiers={
-                (
-                    coordinator.config_entry.domain,
-                    coordinator.config_entry.entry_id,
-                ),
-            },
-        )
+        identifiers={
+            (entry.domain, entry.entry_id),
+        },
+        default_name=entry.title or "Acond device",
+        default_model="Acond Pro",
+        default_manufacturer="Acond",
+    )

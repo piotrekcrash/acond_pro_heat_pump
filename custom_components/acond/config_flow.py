@@ -17,7 +17,7 @@ from .api import (
 )
 from .const import DOMAIN, LOGGER
 
-DEFAULT_NAME = "Acond Heat Pump"
+DEFAULT_NAME = "Acond Pro"
 
 
 class AcondFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
