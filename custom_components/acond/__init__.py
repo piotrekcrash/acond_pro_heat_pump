@@ -52,7 +52,7 @@ async def async_setup_entry(
     tcp_conn = aiohttp.TCPConnector(ssl=ssl_context)
     entry.runtime_data = AcondProData(
         client=AcondProApiClient(
-            ip_address=entry.data[CONF_IP_ADDRESS],
+            ip=entry.data[CONF_IP_ADDRESS],
             username=entry.data[CONF_USERNAME],
             password=entry.data[CONF_PASSWORD],
             session=aiohttp.ClientSession(cookie_jar=cookie_jar, connector=tcp_conn),
