@@ -2,14 +2,15 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
-from homeassistant.components.climate import ClimateEntity, ClimateEntityDescription
-from homeassistant.components.climate import ClimateEntityFeature
+from homeassistant.components.climate import (
+    ClimateEntity,
+    ClimateEntityDescription,
+    ClimateEntityFeature,
+)
 from homeassistant.components.climate.const import HVACMode
-from homeassistant.const import UnitOfTemperature
-from homeassistant.const import ATTR_TEMPERATURE
-# from homeassistant.const import ATTR_TEMPERATURE, TEMP_CELSIUS
+from homeassistant.const import ATTR_TEMPERATURE, UnitOfTemperature
 
 from .entity import AcondProEntity
 
@@ -97,31 +98,32 @@ class AcondProClimate(AcondProEntity, ClimateEntity):
     @property
     def hvac_mode(self) -> str:
         """Return hvac operation ie. heat, cool mode."""
-        # return self.coordinator.data.get("hvac_mode", HVACMode.OFF)
         return HVACMode.HEAT
 
-    async def async_set_temperature(self, **kwargs) -> None:
+    async def async_set_temperature(self, **kwargs: Any) -> None:
         """Set new target temperature."""
         temperature = kwargs.get(ATTR_TEMPERATURE)
-        # if temperature is not None:
-        #     await self.coordinator.api.set_temperature(temperature)
-        #     await self.coordinator.async_request_refresh()
-        #
-        await self.coordinator.config_entry.runtime_data.client.async_set_value("__TBEC2C30E_REAL_.1f", temperature)
+        await (
+            self.coordinator
+            .config_entry
+            .runtime_data
+            .client
+            .async_set_value("__TBEC2C30E_REAL_.1f", temperature)
+        )
         await self.coordinator.async_request_refresh()
 
     async def async_set_hvac_mode(self, hvac_mode: str) -> None:
         """Set new target hvac mode."""
-        #await self.coordinator.api.set_hvac_mode(hvac_mode)
-        # await self.coordinator.async_request_refresh()
-        # test
 
 class AcondProClimateBoiler(AcondProEntity, ClimateEntity):
+    """acond boiler Climate class."""
+
     def __init__(
         self,
         coordinator: AcondDataUpdateCoordinator,
         entity_description: ClimateEntityDescription,
     ) -> None:
+        """Initialize the climate class."""
         super().__init__(coordinator)
         self.entity_description = entity_description
         self._attr_unique_id = entity_description.key
@@ -144,26 +146,26 @@ class AcondProClimateBoiler(AcondProEntity, ClimateEntity):
     @property
     def hvac_mode(self) -> str:
         """Return hvac operation ie. heat, cool mode."""
-        # return self.coordinator.data.get("hvac_mode", HVACMode.OFF)
         return HVACMode.HEAT
 
-    async def async_set_temperature(self, **kwargs) -> None:
+    async def async_set_temperature(self, **kwargs: Any) -> None:
         """Set new target temperature."""
         temperature = kwargs.get(ATTR_TEMPERATURE)
-        # if temperature is not None:
-        #     await self.coordinator.api.set_temperature(temperature)
-        #     await self.coordinator.async_request_refresh()
-        #
-        await self.coordinator.config_entry.runtime_data.client.async_set_value("__T3B27E86E_REAL_.1f", temperature)
+        await (
+            self.coordinator
+            .config_entry
+            .runtime_data
+            .client
+            .async_set_value("__T3B27E86E_REAL_.1f", temperature)
+        )
         await self.coordinator.async_request_refresh()
 
     async def async_set_hvac_mode(self, hvac_mode: str) -> None:
         """Set new target hvac mode."""
-        #await self.coordinator.api.set_hvac_mode(hvac_mode)
-        # await self.coordinator.async_request_refresh()
-        # test
     async def async_turn_on(self) -> None:
+        """Set async on."""
         str(1)
 
     async def async_turn_off(self) -> None:
+        """Set async off."""
         str(2)

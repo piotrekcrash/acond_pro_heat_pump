@@ -56,7 +56,7 @@ ENTITY_DESCRIPTIONS = (
         key="__T9FF6A530_BOOL_i",
         name="Fan",
         icon="mdi:fan",
-    ), 
+    ),
 )
 
 
@@ -91,5 +91,4 @@ class AcondProBinarySensor(AcondProEntity, BinarySensorEntity):
     @property
     def is_on(self) -> bool:
         """Return true if the binary_sensor is on."""
-    #    return self.coordinator.data.get("title", "") == "foo"
         return self.coordinator.data[self.entity_description.key] == "1"
