@@ -26,5 +26,7 @@ class AcondProEntity(CoordinatorEntity[AcondDataUpdateCoordinator]):
                     coordinator.config_entry.entry_id,
                 ),
             },
-            default_name="test12"
+            default_name="Heat Pump",
+            default_model="Acond Pro",
+            default_manufacturer="Acond",
         )
