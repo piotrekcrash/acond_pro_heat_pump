@@ -25,5 +25,4 @@ class AcondProEntity(CoordinatorEntity[AcondDataUpdateCoordinator]):
                     coordinator.config_entry.entry_id,
                 ),
             },
-            default_name=coordinator.config_entry.title,
         )
