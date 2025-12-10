@@ -150,6 +150,9 @@ class AcondProApiClient:
     def _build_url(self, url: str) -> str:
         return "https://" + self._ip_address + url
 
+    def _raise_auth_error(self, message: str) -> None:
+        raise AcondProApiClientAuthenticationError(message)
+
     async def _api_txt_wrapper(
         self,
         method: str,
@@ -171,7 +174,6 @@ class AcondProApiClient:
                     allow_redirects=False,
                 )
                 if response.status == HTTP_FOUND:
-                    LOGGER.error("AUTH after 302")
                     response = await session.post(
                         url=self._build_url(URL_LOGIN),
                         data=self.login_form(),
@@ -181,13 +183,7 @@ class AcondProApiClient:
                         response.status == HTTP_FOUND
                         and response.headers.get("Location") == URL_LOGIN
                     ):
-                        LOGGER.error("302 after AUTH")
-                        msg = "Invalid credentials"
-
-                        def _raise_auth_error(message: str) -> None:
-                            raise AcondProApiClientAuthenticationError(message)
-
-                        _raise_auth_error(msg)
+                        self._raise_auth_error("Invalid credentials")
                 response = await session.request(
                     url=self._build_url(url),
                     method=method,
