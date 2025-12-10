@@ -26,6 +26,4 @@ class AcondProEntity(CoordinatorEntity[AcondDataUpdateCoordinator]):
                 ),
             },
             default_name=coordinator.config_entry.title,
-            default_model="Acond Pro",
-            default_manufacturer="Acond",
         )
