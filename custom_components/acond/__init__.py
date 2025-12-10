@@ -13,7 +13,6 @@ from typing import TYPE_CHECKING
 
 import aiohttp
 from homeassistant.const import CONF_IP_ADDRESS, CONF_PASSWORD, CONF_USERNAME, Platform
-from homeassistant.helpers.aiohttp_client import async_create_clientsession
 from homeassistant.loader import async_get_loaded_integration
 
 from .api import AcondProApiClient
