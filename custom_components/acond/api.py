@@ -1,13 +1,16 @@
 """Sample API Client."""
 
 from __future__ import annotations
+
 import socket
-from typing import Any
-from .const import LOGGER, URL_LOGIN, URL_HOME
-import aiohttp
 import ssl
+from typing import Any
+
+import aiohttp
 import async_timeout
 from bs4 import BeautifulSoup
+
+from .const import LOGGER, URL_HOME, URL_LOGIN
 
 ssl_context = ssl.create_default_context()
 ssl_context.check_hostname = False
@@ -69,22 +72,19 @@ class AcondProApiClient:
         )
 
     async def async_get_home(self) -> Any:
-        LOGGER.error("LOAD_DATA")
-        response = await self._api_txt_wrapper(
+        """Get async home data."""
+        return await self._api_txt_wrapper(
             method="get",
             url=URL_HOME,
         )
-        return response
 
     async def async_set_value(self, name: str, value: str) -> Any:
-        LOGGER.error("SET_VALUE")
-        response = await self._api_txt_wrapper(
+        """Set async data."""
+        return await self._api_txt_wrapper(
             method="post",
             url=URL_HOME,
             data=self.value_update_form(name, value),
         )
-        LOGGER.error(response)
-        return response
 
     async def _api_wrapper(
         self,
@@ -124,6 +124,7 @@ class AcondProApiClient:
         )
 
     def map_response(self, str_response: str) -> Any:
+        """Map response."""
         soup = BeautifulSoup(str_response, "lxml-xml")
         input_elements = soup.find_all("INPUT")
         value_dict: dict[str, str | None] = {}
@@ -134,12 +135,14 @@ class AcondProApiClient:
         return value_dict
 
     def login_form(self) -> aiohttp.FormData:
+        """Login Form."""
         data = aiohttp.FormData(quote_fields=True, charset="utf-8")
         data.add_field("USER", self._username)
         data.add_field("PASS", self._password)
         return data
 
     def value_update_form(self, name: str, value: str) -> aiohttp.FormData:
+        """Value update form."""
         data = aiohttp.FormData(quote_fields=True, charset="utf-8")
         data.add_field(name, value)
         return data
