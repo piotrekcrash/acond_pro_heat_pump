@@ -27,8 +27,8 @@ class AcondProEntity(CoordinatorEntity[AcondDataUpdateCoordinator]):
                     "MAC_ADDRES_OF_DEVICE"
                 ),
             },
-            default_name="Heat Pump",
-            default_model="Acond Pro",
-            default_manufacturer="Acond",
+            name="Heat Pump",
+            model="Acond Pro",
+            manufacturer="Acond",
             config_entry_id=coordinator.config_entry.entry_id,
         )
