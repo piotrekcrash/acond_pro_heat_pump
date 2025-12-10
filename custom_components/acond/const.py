@@ -5,7 +5,7 @@ from logging import Logger, getLogger
 LOGGER: Logger = getLogger(__package__)
 
 DOMAIN = "acond"
-ATTRIBUTION = "Data provided by http://jsonplaceholder.typicode.com/"
+ATTRIBUTION = "TEST_ATTRIBUTION"
 
 URL_LOGIN = "/SYSWWW/LOGIN.XML"
 URL_HOME = "/PAGE115.XML"
