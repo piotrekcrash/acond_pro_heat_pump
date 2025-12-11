@@ -72,21 +72,12 @@ ENTITY_DESCRIPTIONS = (
         unit_of_measurement="°C",
     ),
     SensorEntityDescription(
-        key=const.ETH2_MAC,
-        name="Ethernet MAC",
-        icon="mdi:ethernet"
+        key=const.ETH2_MAC, name="Ethernet MAC", icon="mdi:ethernet"
     ),
+    SensorEntityDescription(key=const.ETH2_IP, name="Ethernet IP", icon="mdi:ip"),
     SensorEntityDescription(
-        key=const.ETH2_IP,
-        name="Ethernet IP",
-        icon="mdi:ip"
+        key=const.FV_VERSION, name="Firmware Version", icon="mdi:chip"
     ),
-    SensorEntityDescription(
-        key=const.FV_VERSION,
-        name="Firmware Version",
-        icon="mdi:chip"
-    ),
-
 )
 
 

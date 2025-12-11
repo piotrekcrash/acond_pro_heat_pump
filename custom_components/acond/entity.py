@@ -2,10 +2,9 @@
 
 from __future__ import annotations
 
+from homeassistant.const import CONF_MAC
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
-from homeassistant.const import CONF_MAC
-
 
 from .const import ATTRIBUTION
 from .coordinator import AcondDataUpdateCoordinator

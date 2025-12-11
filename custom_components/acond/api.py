@@ -10,7 +10,7 @@ import aiohttp
 import async_timeout
 from bs4 import BeautifulSoup
 
-from .const import LOGGER, URL_HOME, URL_LOGIN, URL_INFO
+from .const import LOGGER, URL_HOME, URL_INFO, URL_LOGIN
 
 ssl_context = ssl.create_default_context()
 ssl_context.check_hostname = False
@@ -75,16 +75,19 @@ class AcondProApiClient:
     async def async_get_home(self) -> Any:
         """Get async home data."""
         data = {}
-        data.update(await self._api_txt_wrapper(
-            method="get",
-            url=URL_HOME,
-        ))
-        data.update(await self._api_txt_wrapper(
-            method="get",
-            url=URL_INFO,
-        ))
+        data.update(
+            await self._api_txt_wrapper(
+                method="get",
+                url=URL_HOME,
+            )
+        )
+        data.update(
+            await self._api_txt_wrapper(
+                method="get",
+                url=URL_INFO,
+            )
+        )
         return data
-
 
     async def async_set_value(self, name: str, value: str) -> Any:
         """Set async data."""
