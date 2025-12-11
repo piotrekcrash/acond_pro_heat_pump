@@ -17,6 +17,7 @@ from homeassistant.components.water_heater.const import (
 )
 from homeassistant.const import ATTR_TEMPERATURE, CONF_MAC, UnitOfTemperature
 
+from . import const
 from .entity import AcondProEntity
 
 if TYPE_CHECKING:
@@ -98,7 +99,7 @@ class AcondProWaterHeater(AcondProEntity, WaterHeaterEntity):
     def current_temperature(self) -> float | None:
         """Return the current water temperature (wartość odczytana z bojlera)."""
         # Przykład: Zmień klucz na właściwy dla odczytu temperatury wody!
-        temp_data = self.coordinator.data.get("__T_CURRENT_WATER_TEMP_REAL_.1f") 
+        temp_data = self.coordinator.data.get(const.BOILER_TEMPERATURE_CURRENT)
         if temp_data is not None:
             try:
                 return float(temp_data)
@@ -110,7 +111,7 @@ class AcondProWaterHeater(AcondProEntity, WaterHeaterEntity):
     def target_temperature(self) -> float | None:
         """Return the temperature we try to reach (temperatura zadana)."""
         # Przykład: Zmień klucz na właściwy dla zadanej temperatury wody!
-        target_data = self.coordinator.data.get("__T_SET_WATER_TEMP_REAL_.1f")
+        target_data = self.coordinator.data.get(const.BOILER_TEMPERATURE_TERGET)
         if target_data is not None:
             try:
                 return float(target_data)
@@ -134,7 +135,7 @@ class AcondProWaterHeater(AcondProEntity, WaterHeaterEntity):
         if temperature is not None:
             # Przykład: Zmień klucz na właściwy dla zapisu temperatury zadanej wody!
             await self.coordinator.config_entry.runtime_data.client.async_set_value(
-                "__T_SET_WATER_TEMP_REAL_.1f", str(temperature)
+                const.BOILER_TEMPERATURE_TERGET_SET, str(temperature)
             )
             await self.coordinator.async_request_refresh()
 
