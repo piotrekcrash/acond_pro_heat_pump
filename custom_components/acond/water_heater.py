@@ -29,10 +29,10 @@ if TYPE_CHECKING:
 
 # Mapowanie trybów pracy Water Heater na wartości API Acond
 OPERATION_MODE_MAP: dict[str, str] = {
-    STATE_ECO: "1",         # Tryb Ekonomiczny (np. tylko Pompa Ciepła)
-    STATE_ELECTRIC: "2",    # Tryb Elektryczny (tylko grzałka)
-    STATE_PERFORMANCE: "3", # Tryb Wysokiej Wydajności (np. Pompa + Grzałka)
-    STATE_HEAT_PUMP: "4",   # Tryb Pompa Ciepła (jeśli inny niż ECO)
+    STATE_ECO: "1",  # Tryb Ekonomiczny (np. tylko Pompa Ciepła)
+    STATE_ELECTRIC: "2",  # Tryb Elektryczny (tylko grzałka)
+    STATE_PERFORMANCE: "3",  # Tryb Wysokiej Wydajności (np. Pompa + Grzałka)
+    STATE_HEAT_PUMP: "4",  # Tryb Pompa Ciepła (jeśli inny niż ECO)
 }
 
 # Mapa odwrotna do odczytu stanu
@@ -43,7 +43,7 @@ REVERSE_OPERATION_MODE_MAP: dict[str, str] = {
 
 ENTITY_DESCRIPTIONS = (
     WaterHeaterEntityDescription(
-        key="Water Heater", # Użyj unikalnego klucza dla bojlera
+        key="Water Heater",  # Użyj unikalnego klucza dla bojlera
         name="Acond Pro Water Heater",
         icon="mdi:water-boiler",
     ),

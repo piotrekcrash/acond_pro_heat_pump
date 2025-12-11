@@ -37,7 +37,7 @@ PLATFORMS: list[Platform] = [
     Platform.SWITCH,
     Platform.CLIMATE,
     Platform.SELECT,
-    Platform.WATER_HEATER
+    Platform.WATER_HEATER,
 ]
 
 ssl_context = ssl.create_default_context()
