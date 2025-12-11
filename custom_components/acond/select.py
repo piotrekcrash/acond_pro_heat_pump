@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 from homeassistant.components.select import SelectEntity, SelectEntityDescription
 from homeassistant.const import Platform
@@ -102,14 +102,14 @@ class AcondProSelect(AcondProEntity, SelectEntity):
 
         if value_to_send is None:
             self.coordinator.hass.async_log_warn(
-                Platform.SELECT, 
-                f"Attempted to select unknown option: {option} for {self.entity_description.name}"
+                Platform.SELECT,
+                f"Unknown opt: {option} for {self.entity_description.name}"
             )
             return
 
         # 2. Wyślij wartość do API
         await self.coordinator.config_entry.runtime_data.client.async_set_value(
-            api_key, 
+            api_key,
             value_to_send
         )
         # 3. Odśwież dane
