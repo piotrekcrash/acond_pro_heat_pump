@@ -72,7 +72,6 @@ class AcondProSelect(AcondProEntity, SelectEntity):
         # Ustawienie dostępnych opcji
         self._attr_options = list(MODE_OPTIONS[entity_description.key].keys())
 
-
     @property
     def current_option(self) -> str | None:
         """Return the current selected option."""
@@ -92,7 +91,6 @@ class AcondProSelect(AcondProEntity, SelectEntity):
         # Home Assistant oczekuje jednej z wartości z self._attr_options
         return reversed_options_map.get(current_api_value)
 
-
     async def async_select_option(self, option: str) -> None:
         """Change the selected option."""
         api_key = self.entity_description.key
@@ -103,14 +101,13 @@ class AcondProSelect(AcondProEntity, SelectEntity):
         if value_to_send is None:
             self.coordinator.hass.async_log_warn(
                 Platform.SELECT,
-                f"Unknown opt: {option} for {self.entity_description.name}"
+                f"Unknown opt: {option} for {self.entity_description.name}",
             )
             return
 
         # 2. Wyślij wartość do API
         await self.coordinator.config_entry.runtime_data.client.async_set_value(
-            api_key,
-            value_to_send
+            api_key, value_to_send
         )
         # 3. Odśwież dane
         await self.coordinator.async_request_refresh()
