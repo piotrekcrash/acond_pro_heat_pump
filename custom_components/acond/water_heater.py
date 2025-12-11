@@ -123,7 +123,7 @@ class AcondProWaterHeater(AcondProEntity, WaterHeaterEntity):
     def current_operation(self) -> str | None:
         """Return current operation mode (aktualny tryb pracy bojlera)."""
         # Przykład: Zmień klucz na właściwy dla trybu pracy bojlera!
-        mode_data = self.coordinator.data.get("__T_CURRENT_BOILER_MODE_INT_") 
+        mode_data = self.coordinator.data.get("__T_CURRENT_BOILER_MODE_INT_")
         if mode_data is not None:
             # Tłumaczenie wartości API (np. "1") na stałą HA (np. "eco")
             return REVERSE_OPERATION_MODE_MAP.get(str(mode_data))
