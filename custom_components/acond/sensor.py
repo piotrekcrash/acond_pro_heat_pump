@@ -71,6 +71,10 @@ ENTITY_DESCRIPTIONS = (
         native_unit_of_measurement="°C",
         unit_of_measurement="°C",
     ),
+    SensorEntityDescription(
+        key=const.ETH2_MAC,
+        name="ETH2_MAC",
+    ),
 )
 
 
