@@ -126,9 +126,9 @@ class AcondProApiClient:
     async def login(self) -> Any:
         """Get data from the API."""
         LOGGER.error("LOGIN")
-        await self._api_txt_wrapper(
+        return await self._api_txt_wrapper(
             method="get",
-            url=URL_HOME,
+            url=URL_INFO,
         )
 
     def map_response(self, str_response: str) -> Any:
