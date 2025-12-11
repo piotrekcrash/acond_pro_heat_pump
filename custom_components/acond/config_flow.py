@@ -6,9 +6,9 @@ import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.const import (
     CONF_IP_ADDRESS,
+    CONF_MAC,
     CONF_NAME,
     CONF_PASSWORD,
-    CONF_UNIQUE_ID,
     CONF_USERNAME,
 )
 from homeassistant.helpers import selector
@@ -21,7 +21,7 @@ from .api import (
     AcondProApiClientCommunicationError,
     AcondProApiClientError,
 )
-from .const import DOMAIN, LOGGER, ETH2_MAC
+from .const import DOMAIN, ETH2_MAC, LOGGER
 
 DEFAULT_NAME = "Acond Pro"
 
@@ -61,7 +61,7 @@ class AcondFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                     ## https://developers.home-assistant.io/docs/config_entries_config_flow_handler#unique-ids
                     unique_id=slugify(user_input[CONF_NAME])
                 )
-                user_input[CONF_UNIQUE_ID] = _unique_id
+                user_input[CONF_MAC] = _unique_id
                 self._abort_if_unique_id_configured()
                 return self.async_create_entry(
                     title=user_input[CONF_NAME],
@@ -107,4 +107,4 @@ class AcondFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             password=password,
             session=async_create_clientsession(self.hass, verify_ssl=False),
         )
-        await client.login()[ETH2_MAC]
+        return (await client.login())[ETH2_MAC]

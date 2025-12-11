@@ -14,8 +14,8 @@ from typing import TYPE_CHECKING
 import aiohttp
 from homeassistant.const import (
     CONF_IP_ADDRESS,
+    CONF_MAC,
     CONF_PASSWORD,
-    CONF_UNIQUE_ID,
     CONF_USERNAME,
     Platform,
 )
@@ -66,7 +66,7 @@ async def async_setup_entry(
         integration=async_get_loaded_integration(hass, entry.domain),
         coordinator=coordinator,
     )
-    LOGGER.error("UNIQUE_ID_" + entry.data[CONF_UNIQUE_ID])
+    LOGGER.error("CONF_MAC_" + entry.data[CONF_MAC])
     await coordinator.async_config_entry_first_refresh()
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
