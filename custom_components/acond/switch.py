@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 
 ENTITY_DESCRIPTIONS = (
     SwitchEntityDescription(
-        key="acond",
+        key="__TBEC2C30E_REAL_.1f",
         name="Integration Switch TEST",
         icon="mdi:format-quote-close",
     ),
@@ -50,6 +50,7 @@ class AcondProSwitch(AcondProEntity, SwitchEntity):
         """Initialize the switch class."""
         super().__init__(coordinator)
         self.entity_description = entity_description
+        self._attr_unique_id = entity_description.key
 
     @property
     def is_on(self) -> bool:
