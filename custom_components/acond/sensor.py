@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-import const
 from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
 
+from . import const
 from .entity import AcondProEntity
 
 if TYPE_CHECKING:
