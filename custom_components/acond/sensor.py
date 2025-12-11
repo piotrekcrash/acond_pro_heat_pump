@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+import const
 from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
 
 from .entity import AcondProEntity
@@ -43,7 +44,7 @@ ENTITY_DESCRIPTIONS = (
         unit_of_measurement="kW",
     ),
     SensorEntityDescription(
-        key="__T033A2538_REAL_.1f",
+        key=const.OUTDOR_TEMPERATURE,
         name="Outdoor Temperature",
         icon="mdi:thermometer",
         native_unit_of_measurement="°C",
