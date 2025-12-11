@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
+from homeassistant.const import CONF_MAC
+
 
 from .const import ATTRIBUTION
 from .coordinator import AcondDataUpdateCoordinator
@@ -22,8 +24,7 @@ class AcondProEntity(CoordinatorEntity[AcondDataUpdateCoordinator]):
             identifiers={
                 (
                     coordinator.config_entry.domain,
-                    # coordinator.config_entry.entry_id,
-                    "MAC_ADDRES_OF_DEVICE",
+                    coordinator.config_entry.data[CONF_MAC],
                 ),
             },
             name="Heat Pump",
