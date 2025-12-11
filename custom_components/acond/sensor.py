@@ -73,8 +73,20 @@ ENTITY_DESCRIPTIONS = (
     ),
     SensorEntityDescription(
         key=const.ETH2_MAC,
-        name="ETH2_MAC",
+        name="Ethernet MAC",
+        icon="mdi:ethernet"
     ),
+    SensorEntityDescription(
+        key=const.ETH2_IP,
+        name="Ethernet IP",
+        icon="mdi:ip"
+    ),
+    SensorEntityDescription(
+        key=const.FV_VERSION,
+        name="Firmware Version",
+        icon="mdi:chip"
+    ),
+
 )
 
 
