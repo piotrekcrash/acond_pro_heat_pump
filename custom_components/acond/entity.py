@@ -18,7 +18,6 @@ class AcondProEntity(CoordinatorEntity[AcondDataUpdateCoordinator]):
         """Initialize."""
         super().__init__(coordinator)
         self._attr_has_entity_name = True
-        # self._attr_unique_id = coordinator.config_entry.entry_id
         self._attr_device_info = DeviceInfo(
             identifiers={
                 (
@@ -30,5 +29,4 @@ class AcondProEntity(CoordinatorEntity[AcondDataUpdateCoordinator]):
             name="Heat Pump",
             model="Acond Pro",
             manufacturer="Acond",
-            # config_entry_id=coordinator.config_entry.entry_id,
         )
