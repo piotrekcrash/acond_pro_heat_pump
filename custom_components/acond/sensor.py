@@ -76,6 +76,9 @@ ENTITY_DESCRIPTIONS = (
     ),
     SensorEntityDescription(key=const.ETH2_IP, name="Ethernet IP", icon="mdi:ip"),
     SensorEntityDescription(
+        key=const.SV_VERSION, name="Foftware Version", icon="mdi:chip"
+    ),
+    SensorEntityDescription(
         key=const.FV_VERSION, name="Firmware Version", icon="mdi:chip"
     ),
 )
