@@ -44,7 +44,7 @@ ENTITY_DESCRIPTIONS = (
     ),
     BinarySensorEntityDescription(
         key="__T56A70EC9_BOOL_i",
-        name="Bivalence 1",
+        name="Bivalence 2",
         icon="mdi:heat-wave",
     ),
     BinarySensorEntityDescription(
