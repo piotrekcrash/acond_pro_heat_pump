@@ -92,8 +92,9 @@ class AcondProWaterHeater(AcondProEntity, WaterHeaterEntity):
         self._attr_temperature_unit = UnitOfTemperature.CELSIUS
 
         # Wartości min/max dla C.W.U.
-        self._attr_min_temp = 30
-        self._attr_max_temp = 60
+        self._attr_min_temp = 10
+        self._attr_max_temp = 50
+        self._attr_target_temperature_step = 0.1
 
     @property
     def current_temperature(self) -> float | None:

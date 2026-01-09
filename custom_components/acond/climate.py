@@ -82,8 +82,9 @@ class AcondProClimate(AcondProEntity, ClimateEntity):
         self._attr_supported_features = ClimateEntityFeature.TARGET_TEMPERATURE
         self._attr_hvac_modes = [HVACMode.HEAT]
         self._attr_temperature_unit = UnitOfTemperature.CELSIUS
-        self._attr_min_temp = 7
-        self._attr_max_temp = 35
+        self._attr_min_temp = 10
+        self._attr_max_temp = 30
+        self._attr_target_temperature_step = 0.1
 
     @property
     def current_temperature(self) -> float | None:
@@ -127,8 +128,9 @@ class AcondProClimateBoiler(AcondProEntity, ClimateEntity):
         self._attr_supported_features = BOILER_FEATURES
         self._attr_hvac_modes = [HVACMode.OFF, HVACMode.HEAT]
         self._attr_temperature_unit = UnitOfTemperature.CELSIUS
-        self._attr_min_temp = 30
+        self._attr_min_temp = 10
         self._attr_max_temp = 50
+        self._attr_target_temperature_step = 0.1
 
     @property
     def current_temperature(self) -> float | None:
