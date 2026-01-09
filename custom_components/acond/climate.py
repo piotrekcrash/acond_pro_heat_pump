@@ -59,14 +59,6 @@ async def async_setup_entry(
         )
         for entity_description in ENTITY_DESCRIPTIONS
     )
-    async_add_entities(
-        AcondProClimateBoiler(
-            coordinator=entry.runtime_data.coordinator,
-            entity_description=entity_description,
-        )
-        for entity_description in ENTITY_DESCRIPTIONS_BOILER
-    )
-
 
 class AcondProClimate(AcondProEntity, ClimateEntity):
     """acond Climate class."""
