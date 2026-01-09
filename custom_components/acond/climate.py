@@ -12,6 +12,7 @@ from homeassistant.components.climate import (
 from homeassistant.components.climate.const import HVACMode
 from homeassistant.const import ATTR_TEMPERATURE, UnitOfTemperature
 
+from . import const
 from .entity import AcondProEntity
 
 if TYPE_CHECKING:
@@ -89,12 +90,12 @@ class AcondProClimate(AcondProEntity, ClimateEntity):
     @property
     def current_temperature(self) -> float | None:
         """Return the current temperature."""
-        return float(self.coordinator.data["__T46AA2571_REAL_.1f"])
+        return float(self.coordinator.data[const.INDOOR_TEMPERATURE_CURRENT])
 
     @property
     def target_temperature(self) -> float | None:
         """Return the temperature we try to reach."""
-        return float(self.coordinator.data["__T05D9E707_REAL_.1f"])
+        return float(self.coordinator.data[const.INDOOR_TEMPERATURE_TERGET])
 
     @property
     def hvac_mode(self) -> str:
@@ -105,7 +106,7 @@ class AcondProClimate(AcondProEntity, ClimateEntity):
         """Set new target temperature."""
         temperature = kwargs.get(ATTR_TEMPERATURE)
         await self.coordinator.config_entry.runtime_data.client.async_set_value(
-            "__TBEC2C30E_REAL_.1f", temperature
+            const.INDOOR_TEMPERATURE_TERGET_SET, temperature
         )
         await self.coordinator.async_request_refresh()
 
@@ -135,12 +136,12 @@ class AcondProClimateBoiler(AcondProEntity, ClimateEntity):
     @property
     def current_temperature(self) -> float | None:
         """Return the current temperature."""
-        return float(self.coordinator.data["__T881A25AA_REAL_.1f"])
+        return float(self.coordinator.data[const.BOILER_TEMPERATURE_CURRENT])
 
     @property
     def target_temperature(self) -> float | None:
         """Return the temperature we try to reach."""
-        return float(self.coordinator.data["__T1E34E7DC_REAL_.1f"])
+        return float(self.coordinator.data[const.BOILER_TEMPERATURE_TARGET])
 
     @property
     def hvac_mode(self) -> str:
@@ -151,7 +152,7 @@ class AcondProClimateBoiler(AcondProEntity, ClimateEntity):
         """Set new target temperature."""
         temperature = kwargs.get(ATTR_TEMPERATURE)
         await self.coordinator.config_entry.runtime_data.client.async_set_value(
-            "__T3B27E86E_REAL_.1f", temperature
+            const.BOILER_TEMPERATURE_TERGET_SET, temperature
         )
         await self.coordinator.async_request_refresh()
 
