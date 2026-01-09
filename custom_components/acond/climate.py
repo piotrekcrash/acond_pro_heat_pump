@@ -152,7 +152,7 @@ class AcondProClimateBoiler(AcondProEntity, ClimateEntity):
         """Set new target temperature."""
         temperature = kwargs.get(ATTR_TEMPERATURE)
         await self.coordinator.config_entry.runtime_data.client.async_set_value(
-            const.BOILER_TEMPERATURE_TERGET_SET, temperature
+            const.BOILER_TEMPERATURE_TARGET_SET, temperature
         )
         await self.coordinator.async_request_refresh()
 
