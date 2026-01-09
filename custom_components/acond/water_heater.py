@@ -128,7 +128,7 @@ class AcondProWaterHeater(AcondProEntity, WaterHeaterEntity):
         if mode_data is not None:
             # Tłumaczenie wartości API (np. "1") na stałą HA (np. "eco")
             return REVERSE_OPERATION_MODE_MAP.get(str(mode_data))
-        return None
+        return STATE_HEAT_PUMP
 
     async def async_set_temperature(self, **kwargs: Any) -> None:
         """Set new target temperature (ustawienie nowej temperatury zadanej wody)."""
