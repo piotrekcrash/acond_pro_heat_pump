@@ -60,6 +60,7 @@ async def async_setup_entry(
         for entity_description in ENTITY_DESCRIPTIONS
     )
 
+
 class AcondProClimate(AcondProEntity, ClimateEntity):
     """acond Climate class."""
 
