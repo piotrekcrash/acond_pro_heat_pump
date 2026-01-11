@@ -10,6 +10,7 @@ from homeassistant.components.binary_sensor import (
     BinarySensorEntityDescription,
 )
 
+from . import const
 from .entity import AcondProEntity
 
 if TYPE_CHECKING:
@@ -56,6 +57,11 @@ ENTITY_DESCRIPTIONS = (
         key="__T9FF6A530_BOOL_i",
         name="Fan",
         icon="mdi:fan",
+    ),
+    BinarySensorEntityDescription(
+        key=const.BOILER_HEATING,
+        name="Water Tank Heating",
+        icon="mdi:water-boiler",
     ),
 )
 
