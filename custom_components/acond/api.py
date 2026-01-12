@@ -174,7 +174,7 @@ class AcondProApiClient:
         """Get information from the API."""
         try:
             async with (
-                async_timeout.timeout(10),
+                async_timeout.timeout(30),
                 aiohttp.ClientSession(
                     cookie_jar=self._cookie_jar,
                     connector=aiohttp.TCPConnector(ssl=ssl_context),
