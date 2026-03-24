@@ -72,11 +72,10 @@ class AcondFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                 {
                     vol.Required(
                         CONF_IP_ADDRESS,
-                        default=reconfigure_entry.data.get(CONF_IP_ADDRESS)
+                        default=reconfigure_entry.data.get(CONF_IP_ADDRESS),
                     ): str,
                     vol.Required(
-                        CONF_USERNAME,
-                        default=reconfigure_entry.data.get(CONF_USERNAME)
+                        CONF_USERNAME, default=reconfigure_entry.data.get(CONF_USERNAME)
                     ): str,
                     vol.Required(CONF_PASSWORD): selector.TextSelector(
                         selector.TextSelectorConfig(
