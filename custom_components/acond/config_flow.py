@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.const import (
@@ -30,6 +32,61 @@ class AcondFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Config flow for Acond."""
 
     VERSION = 1
+
+    async def async_step_reconfigure(
+        self, user_input: dict[str, Any] | None = None
+    ) -> config_entries.ConfigFlowResult:
+        """Handle reconfiguration of the integration."""
+        _errors = {}
+        # Get the existing entry we are reconfiguring
+        reconfigure_entry = self._get_reconfigure_entry()
+
+        if user_input is not None:
+            try:
+                # Reuse your existing credential test logic
+                await self._test_credentials(
+                    ip=user_input[CONF_IP_ADDRESS],
+                    username=user_input[CONF_USERNAME],
+                    password=user_input[CONF_PASSWORD],
+                )
+            except AcondProApiClientAuthenticationError as exception:
+                LOGGER.warning(exception)
+                _errors["base"] = "auth"
+            except AcondProApiClientCommunicationError as exception:
+                LOGGER.error(exception)
+                _errors["base"] = "connection"
+            except AcondProApiClientError as exception:
+                LOGGER.exception(exception)
+                _errors["base"] = "unknown"
+            else:
+                # This updates the existing entry and restarts it
+                return self.async_update_reload_and_abort(
+                    reconfigure_entry,
+                    data={**reconfigure_entry.data, **user_input},
+                )
+
+        # Pre-fill the form with the current settings
+        return self.async_show_form(
+            step_id="reconfigure",
+            data_schema=vol.Schema(
+                {
+                    vol.Required(
+                        CONF_IP_ADDRESS, 
+                        default=reconfigure_entry.data.get(CONF_IP_ADDRESS)
+                    ): str,
+                    vol.Required(
+                        CONF_USERNAME, 
+                        default=reconfigure_entry.data.get(CONF_USERNAME)
+                    ): str,
+                    vol.Required(CONF_PASSWORD): selector.TextSelector(
+                        selector.TextSelectorConfig(
+                            type=selector.TextSelectorType.PASSWORD,
+                        ),
+                    ),
+                }
+            ),
+            errors=_errors,
+        )
 
     async def async_step_user(
         self,
