@@ -18,6 +18,7 @@ from homeassistant.components.water_heater.const import (
 from homeassistant.const import ATTR_TEMPERATURE, CONF_MAC, UnitOfTemperature
 
 from . import const
+from .const import LOGGER
 from .entity import AcondProEntity
 
 if TYPE_CHECKING:
@@ -80,6 +81,7 @@ class AcondProWaterHeater(AcondProEntity, WaterHeaterEntity):
         # Generowanie Unikalnego ID (MAC + klucz encji)
         mac = coordinator.config_entry.data.get(CONF_MAC, "unknown_mac")
         self._attr_unique_id = f"{mac}_{entity_description.key}"
+        LOGGER.error("Water Heater Unique id: " + self._attr_unique_id)
 
         # Definicja wspieranych funkcji
         self._attr_supported_features = (
