@@ -6,7 +6,7 @@
                 "data": {
                     "username": "Username",
                     "password": "Password",
-                    "ip": "IP Address"
+                    "ip_address": "IP or Host name"
                 }
             },
             "reconfigure": {
@@ -14,7 +14,7 @@
                 "data": {
                     "username": "Username",
                     "password": "Password",
-                    "ip": "IP Address"
+                    "ip_address": "IP or Host name"
                 }
             }
         },
