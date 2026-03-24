@@ -10,7 +10,7 @@ from homeassistant.components.climate import (
     ClimateEntityFeature,
 )
 from homeassistant.components.climate.const import HVACMode
-from homeassistant.const import ATTR_TEMPERATURE, UnitOfTemperature
+from homeassistant.const import ATTR_TEMPERATURE, CONF_MAC, UnitOfTemperature
 
 from . import const
 from .entity import AcondProEntity
@@ -71,8 +71,9 @@ class AcondProClimate(AcondProEntity, ClimateEntity):
     ) -> None:
         """Initialize the climate class."""
         super().__init__(coordinator)
+        mac = coordinator.config_entry.data.get(CONF_MAC, "unknown_mac")
         self.entity_description = entity_description
-        self._attr_unique_id = entity_description.key
+        self._attr_unique_id = f"{mac}_{entity_description.key}"
         self._attr_supported_features = ClimateEntityFeature.TARGET_TEMPERATURE
         self._attr_hvac_modes = [HVACMode.HEAT]
         self._attr_temperature_unit = UnitOfTemperature.CELSIUS

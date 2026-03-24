@@ -81,7 +81,6 @@ class AcondProWaterHeater(AcondProEntity, WaterHeaterEntity):
         # Generowanie Unikalnego ID (MAC + klucz encji)
         mac = coordinator.config_entry.data.get(CONF_MAC, "unknown_mac")
         self._attr_unique_id = f"{mac}_{entity_description.key}"
-        LOGGER.error("Water Heater Unique id: " + self._attr_unique_id)
 
         # Definicja wspieranych funkcji
         self._attr_supported_features = (

@@ -9,6 +9,7 @@ from homeassistant.components.binary_sensor import (
     BinarySensorEntity,
     BinarySensorEntityDescription,
 )
+from homeassistant.const import CONF_MAC
 
 from . import const
 from .entity import AcondProEntity
@@ -91,8 +92,9 @@ class AcondProBinarySensor(AcondProEntity, BinarySensorEntity):
     ) -> None:
         """Initialize the binary_sensor class."""
         super().__init__(coordinator)
+        mac = coordinator.config_entry.data.get(CONF_MAC, "unknown_mac")
         self.entity_description = entity_description
-        self._attr_unique_id = entity_description.key
+        self._attr_unique_id = f"{mac}_{entity_description.key}"
 
     @property
     def is_on(self) -> bool:
