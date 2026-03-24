@@ -8,6 +8,14 @@
                     "password": "Password",
                     "ip": "IP Address"
                 }
+            },
+            "reconfigure": {
+                "description": "If you need help with the configuration have a look on github repository",
+                "data": {
+                    "username": "Username",
+                    "password": "Password",
+                    "ip": "IP Address"
+                }
             }
         },
         "error": {
@@ -16,7 +24,8 @@
             "unknown": "Unknown error occurred."
         },
         "abort": {
-            "already_configured": "This entry is already configured ."
+            "already_configured": "This entry is already configured .",
+            "reconfigure_successful": "Reconfiguration was successful!"
         }
     }
 }
