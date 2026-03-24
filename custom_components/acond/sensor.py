@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
+from homeassistant.const import CONF_MAC
 
 from . import const
 from .entity import AcondProEntity
@@ -116,8 +117,9 @@ class AcondProSensor(AcondProEntity, SensorEntity):
     ) -> None:
         """Initialize the sensor class."""
         super().__init__(coordinator)
+        mac = coordinator.config_entry.data.get(CONF_MAC, "unknown_mac")
         self.entity_description = entity_description
-        self._attr_unique_id = entity_description.key
+        self._attr_unique_id = f"{mac}_{entity_description.key}"
 
     @property
     def native_value(self) -> str | None:
