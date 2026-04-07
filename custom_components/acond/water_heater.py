@@ -18,7 +18,6 @@ from homeassistant.components.water_heater.const import (
 from homeassistant.const import ATTR_TEMPERATURE, CONF_MAC, UnitOfTemperature
 
 from . import const
-from .const import LOGGER
 from .entity import AcondProEntity
 
 if TYPE_CHECKING:
