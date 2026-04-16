@@ -75,7 +75,9 @@ class AcondProWaterHeater(AcondProEntity, WaterHeaterEntity):
         entity_description: WaterHeaterEntityDescription,
     ) -> None:
         """Initialize the water heater class."""
-        super().__init__(coordinator, entity_description.device_name)
+        super().__init__(
+            coordinator, entity_description.device_name, entity_description.device_key
+        )
         self.entity_description = entity_description
 
         # Generowanie Unikalnego ID (MAC + klucz encji)

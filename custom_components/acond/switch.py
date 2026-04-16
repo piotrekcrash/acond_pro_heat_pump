@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING, Any
 
 from homeassistant.components.switch import SwitchEntity, SwitchEntityDescription
 
+from . import const
 from .entity import AcondProEntity, AcondSwitchEntityDescription
 
 if TYPE_CHECKING:
@@ -20,6 +21,7 @@ ENTITY_DESCRIPTIONS = (
         key="__TBEC2C30E_REAL_.1f",
         name="Integration Switch TEST",
         icon="mdi:format-quote-close",
+        device_name=const.DEVICE_HEAT_PUMP,
     ),
 )
 
