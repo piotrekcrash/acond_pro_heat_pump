@@ -7,7 +7,8 @@ from typing import TYPE_CHECKING
 from homeassistant.components.select import SelectEntity, SelectEntityDescription
 from homeassistant.const import Platform
 
-from .entity import AcondProEntity
+from . import const
+from .entity import AcondProEntity, AcondSelectEntityDescription
 
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
@@ -20,10 +21,11 @@ if TYPE_CHECKING:
 # W tym przykładzie, 'key' to unikalny identyfikator parametru z API Acond,
 # a 'options' to mapa 'wyświetlana_nazwa': 'wartość_do_wysłania_do_API'.
 SELECT_ENTITY_DESCRIPTIONS = (
-    SelectEntityDescription(
+    AcondSelectEntityDescription(
         key="__T47138CF2_INT_.1f",  # Przykładowy klucz zmiennej API Acond
         name="Acond Operating Mode",
         icon="mdi:thermostat",
+        device_name=const.DEVICE_HEAT_PUMP,
     ),
 )
 

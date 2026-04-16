@@ -46,7 +46,7 @@ ENTITY_DESCRIPTIONS = (
         key="Water Heater",  # Użyj unikalnego klucza dla bojlera
         name="Acond Pro Water Heater",
         icon="mdi:water-boiler",
-        device_name="Water Heater 2",
+        device_name=const.DEVICE_WATER_TANK,
     ),
 )
 

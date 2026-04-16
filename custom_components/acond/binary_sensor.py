@@ -12,7 +12,7 @@ from homeassistant.components.binary_sensor import (
 from homeassistant.const import CONF_MAC
 
 from . import const
-from .entity import AcondProEntity
+from .entity import AcondBinarySensorEntityDescription, AcondProEntity
 
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
@@ -22,47 +22,55 @@ if TYPE_CHECKING:
     from .data import AcondProConfigEntry
 
 ENTITY_DESCRIPTIONS = (
-    BinarySensorEntityDescription(
+    AcondBinarySensorEntityDescription(
         key="__T2BA2EA36_BOOL_i",
         name="Main Pump",
         device_class=BinarySensorDeviceClass.RUNNING,
         icon="mdi:pump",
+        device_name=const.DEVICE_HEAT_PUMP,
     ),
-    BinarySensorEntityDescription(
+    AcondBinarySensorEntityDescription(
         key="__T6F64FA70_BOOL_i",
         name="Circulation Pump",
         device_class=BinarySensorDeviceClass.RUNNING,
         icon="mdi:pump",
+        device_name=const.DEVICE_HEAT_PUMP,
     ),
-    BinarySensorEntityDescription(
+    AcondBinarySensorEntityDescription(
         key="__TE1D81C79_BOOL_i",
         name="Defrost",
         icon="mdi:snowflake-melt",
+        device_name=const.DEVICE_HEAT_PUMP,
     ),
-    BinarySensorEntityDescription(
+    AcondBinarySensorEntityDescription(
         key="__TD3998BF7_BOOL_i",
         name="Bivalence 1",
         icon="mdi:heat-wave",
+        device_name=const.DEVICE_HEAT_PUMP,
     ),
-    BinarySensorEntityDescription(
+    AcondBinarySensorEntityDescription(
         key="__T56A70EC9_BOOL_i",
         name="Bivalence 2",
         icon="mdi:heat-wave",
+        device_name=const.DEVICE_HEAT_PUMP,
     ),
-    BinarySensorEntityDescription(
+    AcondBinarySensorEntityDescription(
         key="__T61E4AC91_BOOL_i",
         name="Compressor",
         icon="mdi:heat-pump",
+        device_name=const.DEVICE_HEAT_PUMP,
     ),
-    BinarySensorEntityDescription(
+    AcondBinarySensorEntityDescription(
         key="__T9FF6A530_BOOL_i",
         name="Fan",
         icon="mdi:fan",
+        device_name=const.DEVICE_HEAT_PUMP,
     ),
-    BinarySensorEntityDescription(
+    AcondBinarySensorEntityDescription(
         key=const.BOILER_HEATING,
         name="Water Tank Heating",
         icon="mdi:water-boiler",
+        device_name=const.DEVICE_HEAT_PUMP,
     ),
 )
 

@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from homeassistant.components.binary_sensor import BinarySensorEntityDescription
+from homeassistant.components.climate import ClimateEntityDescription
 from homeassistant.components.sensor import SensorEntityDescription
 from homeassistant.components.water_heater import WaterHeaterEntityDescription
 from homeassistant.const import CONF_MAC
@@ -43,28 +44,42 @@ class AcondProEntity(CoordinatorEntity[AcondDataUpdateCoordinator]):
 
 @dataclass(frozen=True, kw_only=True)
 class AcondBaseDescription(EntityDescription):
-    """Baza z automatycznym generowaniem klucza urządzenia."""
+    """Base for entity derscriptions iwth key generation."""
 
     device_name: str  # Podajesz np. "Water Heater"
 
     @property
     def device_key(self) -> str:
-        """Generuje 'water_heater' z 'Water Heater'."""
+        """Generate device_key."""
         return self.device_name.lower().replace(" ", "_")
 
 
 @dataclass(frozen=True, kw_only=True)
-class AcondSensorDescription(SensorEntityDescription, AcondBaseDescription):
-    """Hybryda dla zwykłych sensorów."""
+class AcondSensorEntityDescription(SensorEntityDescription, AcondBaseDescription):
+    """Hybrid for sensorów."""
 
 
 @dataclass(frozen=True, kw_only=True)
-class AcondBinarySensorDescription(BinarySensorEntityDescription, AcondBaseDescription):
-    """Hybryda dla binarnych sensorów."""
-
+class AcondBinarySensorEntityDescription(
+    BinarySensorEntityDescription, AcondBaseDescription
+):
+    """Hybrid for binary sensor."""
 
 @dataclass(frozen=True, kw_only=True)
 class AcondWaterHeaterEntityDescription(
     WaterHeaterEntityDescription, AcondBaseDescription
 ):
-    """Hybryda dla water heater."""
+    """Hybrid for water heater."""
+
+class AcondSwitchEntityDescription(BinarySensorEntityDescription, AcondBaseDescription):
+    """Hybrid for a switch."""
+
+@dataclass(frozen=True, kw_only=True)
+class AcondSelectEntityDescription(
+    BinarySensorEntityDescription, AcondBaseDescription
+):
+    """Hybrid for select."""
+
+@dataclass(frozen=True, kw_only=True)
+class AcondClimateEntityDescription(ClimateEntityDescription, AcondBaseDescription):
+    """Hybrid for sensorów."""
