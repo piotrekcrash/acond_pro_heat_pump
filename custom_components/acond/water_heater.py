@@ -18,7 +18,7 @@ from homeassistant.components.water_heater.const import (
 from homeassistant.const import ATTR_TEMPERATURE, CONF_MAC, UnitOfTemperature
 
 from . import const
-from .entity import AcondProEntity
+from .entity import AcondProEntity, AcondWaterHeaterEntityDescription
 
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
@@ -42,10 +42,11 @@ REVERSE_OPERATION_MODE_MAP: dict[str, str] = {
 
 
 ENTITY_DESCRIPTIONS = (
-    WaterHeaterEntityDescription(
+    AcondWaterHeaterEntityDescription(
         key="Water Heater",  # Użyj unikalnego klucza dla bojlera
         name="Acond Pro Water Heater",
         icon="mdi:water-boiler",
+        device_name="Water Heater 2",
     ),
 )
 
@@ -74,7 +75,7 @@ class AcondProWaterHeater(AcondProEntity, WaterHeaterEntity):
         entity_description: WaterHeaterEntityDescription,
     ) -> None:
         """Initialize the water heater class."""
-        super().__init__(coordinator, "Water Tank")
+        super().__init__(coordinator, entity_description.device_name)
         self.entity_description = entity_description
 
         # Generowanie Unikalnego ID (MAC + klucz encji)
