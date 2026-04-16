@@ -8,7 +8,7 @@ from homeassistant.components.sensor import SensorEntity, SensorEntityDescriptio
 from homeassistant.const import CONF_MAC
 
 from . import const
-from .entity import AcondSensorEntityDescription, AcondProEntity
+from .entity import AcondProEntity, AcondSensorEntityDescription
 
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
