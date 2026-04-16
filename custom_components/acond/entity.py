@@ -16,11 +16,8 @@ class AcondProEntity(CoordinatorEntity[AcondDataUpdateCoordinator]):
     _attr_attribution = ATTRIBUTION
 
     def __init__(
-            self,
-            coordinator:
-            AcondDataUpdateCoordinator,
-            device_name: str
-            ) -> None:
+        self, coordinator: AcondDataUpdateCoordinator, device_name: str
+    ) -> None:
         """Initialize."""
         super().__init__(coordinator)
         self._attr_has_entity_name = True
