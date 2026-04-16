@@ -13,7 +13,7 @@ from homeassistant.components.climate.const import HVACMode
 from homeassistant.const import ATTR_TEMPERATURE, CONF_MAC, UnitOfTemperature
 
 from . import const
-from .entity import AcondProEntity
+from .entity import AcondProEntity, AcondClimateEntityDescription
 
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
@@ -24,7 +24,7 @@ if TYPE_CHECKING:
 
 
 ENTITY_DESCRIPTIONS = (
-    ClimateEntityDescription(
+    AcondClimateEntityDescription(
         key="acond_pro_climate",
         name="Acond Pro Heat Pump",
         icon="mdi:heat-pump",
