@@ -40,6 +40,7 @@ class AcondProEntity(CoordinatorEntity[AcondDataUpdateCoordinator]):
             manufacturer="Acond",
         )
 
+
 @dataclass(frozen=True, kw_only=True)
 class AcondBaseDescription(EntityDescription):
     """Baza z automatycznym generowaniem klucza urządzenia."""
@@ -51,17 +52,19 @@ class AcondBaseDescription(EntityDescription):
         """Generuje 'water_heater' z 'Water Heater'."""
         return self.device_name.lower().replace(" ", "_")
 
+
 @dataclass(frozen=True, kw_only=True)
 class AcondSensorDescription(SensorEntityDescription, AcondBaseDescription):
     """Hybryda dla zwykłych sensorów."""
+
 
 @dataclass(frozen=True, kw_only=True)
 class AcondBinarySensorDescription(BinarySensorEntityDescription, AcondBaseDescription):
     """Hybryda dla binarnych sensorów."""
 
+
 @dataclass(frozen=True, kw_only=True)
 class AcondWaterHeaterEntityDescription(
-    WaterHeaterEntityDescription,
-    AcondBaseDescription
-    ):
+    WaterHeaterEntityDescription, AcondBaseDescription
+):
     """Hybryda dla water heater."""
