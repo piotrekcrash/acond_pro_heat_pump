@@ -13,7 +13,7 @@ from homeassistant.components.climate.const import HVACMode
 from homeassistant.const import ATTR_TEMPERATURE, CONF_MAC, UnitOfTemperature
 
 from . import const
-from .entity import AcondProEntity, AcondClimateEntityDescription
+from .entity import AcondClimateEntityDescription, AcondProEntity
 
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
