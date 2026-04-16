@@ -99,7 +99,9 @@ class AcondProBinarySensor(AcondProEntity, BinarySensorEntity):
         entity_description: BinarySensorEntityDescription,
     ) -> None:
         """Initialize the binary_sensor class."""
-        super().__init__(coordinator, "Heat Pump")
+        super().__init__(
+            coordinator, entity_description.device_name, entity_description.device_key
+        )
         mac = coordinator.config_entry.data.get(CONF_MAC, "unknown_mac")
         self.entity_description = entity_description
         self._attr_unique_id = f"{mac}_{entity_description.key}"

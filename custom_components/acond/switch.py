@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 
 from homeassistant.components.switch import SwitchEntity, SwitchEntityDescription
 
-from .entity import AcondProEntity
+from .entity import AcondProEntity, AcondSwitchEntityDescription
 
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
@@ -16,7 +16,7 @@ if TYPE_CHECKING:
     from .data import AcondProConfigEntry
 
 ENTITY_DESCRIPTIONS = (
-    SwitchEntityDescription(
+    AcondSwitchEntityDescription(
         key="__TBEC2C30E_REAL_.1f",
         name="Integration Switch TEST",
         icon="mdi:format-quote-close",
@@ -48,7 +48,9 @@ class AcondProSwitch(AcondProEntity, SwitchEntity):
         entity_description: SwitchEntityDescription,
     ) -> None:
         """Initialize the switch class."""
-        super().__init__(coordinator, "Heat Pump")
+        super().__init__(
+            coordinator, entity_description.device_name, entity_description.device_key
+        )
         self.entity_description = entity_description
         self._attr_unique_id = entity_description.key
 
