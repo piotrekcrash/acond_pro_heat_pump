@@ -8,7 +8,7 @@ from homeassistant.components.sensor import SensorEntity, SensorEntityDescriptio
 from homeassistant.const import CONF_MAC
 
 from . import const
-from .entity import AcondBinarySensorEntityDescription, AcondProEntity
+from .entity import AcondSensorEntityDescription, AcondProEntity
 
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
@@ -19,7 +19,7 @@ if TYPE_CHECKING:
 
 
 ENTITY_DESCRIPTIONS = (
-    AcondBinarySensorEntityDescription(
+    AcondSensorEntityDescription(
         key="__TA725D6FD_REAL_.0f",
         name="Electric Energy",
         icon="mdi:lightning-bolt",
@@ -29,7 +29,7 @@ ENTITY_DESCRIPTIONS = (
         device_class="energy",
         device_name=const.DEVICE_HEAT_PUMP,
     ),
-    AcondBinarySensorEntityDescription(
+    AcondSensorEntityDescription(
         key="__T6BEBB72C_REAL_.0f",
         name="Thermal Energy",
         icon="mdi:water-boiler",
@@ -39,7 +39,7 @@ ENTITY_DESCRIPTIONS = (
         device_class="energy",
         device_name=const.DEVICE_HEAT_PUMP,
     ),
-    AcondBinarySensorEntityDescription(
+    AcondSensorEntityDescription(
         key="__TD50B2FF2_REAL_.2f",
         name="Pump Efficiency",
         icon="mdi:lightning-bolt",
@@ -47,7 +47,7 @@ ENTITY_DESCRIPTIONS = (
         unit_of_measurement="kW",
         device_name=const.DEVICE_HEAT_PUMP,
     ),
-    AcondBinarySensorEntityDescription(
+    AcondSensorEntityDescription(
         key=const.OUTDOR_TEMPERATURE,
         name="Outdoor Temperature",
         icon="mdi:thermometer",
@@ -55,7 +55,7 @@ ENTITY_DESCRIPTIONS = (
         unit_of_measurement="°C",
         device_name=const.DEVICE_HEAT_PUMP,
     ),
-    AcondBinarySensorEntityDescription(
+    AcondSensorEntityDescription(
         key="__TDE3BFC02_REAL_.1f",
         name="Outdoor Temperature Average",
         icon="mdi:thermometer",
@@ -63,7 +63,7 @@ ENTITY_DESCRIPTIONS = (
         unit_of_measurement="°C",
         device_name=const.DEVICE_HEAT_PUMP,
     ),
-    AcondBinarySensorEntityDescription(
+    AcondSensorEntityDescription(
         key="__T50A32455_REAL_.1f",
         name="Heat Pump Water Inbound Temperature",
         icon="mdi:thermometer",
@@ -71,7 +71,7 @@ ENTITY_DESCRIPTIONS = (
         unit_of_measurement="°C",
         device_name=const.DEVICE_HEAT_PUMP,
     ),
-    AcondBinarySensorEntityDescription(
+    AcondSensorEntityDescription(
         key="__T9E13248E_REAL_.1f",
         name="Heat Pump Water Outbound Temperature",
         icon="mdi:thermometer",
@@ -79,7 +79,7 @@ ENTITY_DESCRIPTIONS = (
         unit_of_measurement="°C",
         device_name=const.DEVICE_HEAT_PUMP,
     ),
-    AcondBinarySensorEntityDescription(
+    AcondSensorEntityDescription(
         key=const.INDOOR_TEMPERATURE_CURRENT,
         name="Indoor Temperature",
         icon="mdi:thermometer",
@@ -87,25 +87,25 @@ ENTITY_DESCRIPTIONS = (
         unit_of_measurement="°C",
         device_name=const.DEVICE_HEAT_PUMP,
     ),
-    AcondBinarySensorEntityDescription(
+    AcondSensorEntityDescription(
         key=const.ETH2_MAC,
         name="Ethernet MAC",
         icon="mdi:ethernet",
         device_name=const.DEVICE_HEAT_PUMP,
     ),
-    AcondBinarySensorEntityDescription(
+    AcondSensorEntityDescription(
         key=const.ETH2_IP,
         name="Ethernet IP",
         icon="mdi:ip",
         device_name=const.DEVICE_HEAT_PUMP,
     ),
-    AcondBinarySensorEntityDescription(
+    AcondSensorEntityDescription(
         key=const.SV_VERSION,
         name="Foftware Version",
         icon="mdi:chip",
         device_name=const.DEVICE_HEAT_PUMP,
     ),
-    AcondBinarySensorEntityDescription(
+    AcondSensorEntityDescription(
         key=const.FV_VERSION,
         name="Firmware Version",
         icon="mdi:chip",
