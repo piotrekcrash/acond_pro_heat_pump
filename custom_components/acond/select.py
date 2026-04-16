@@ -63,7 +63,7 @@ class AcondProSelect(AcondProEntity, SelectEntity):
         entity_description: SelectEntityDescription,
     ) -> None:
         """Initialize the select class."""
-        super().__init__(coordinator)
+        super().__init__(coordinator, "Heat Pump")
         self.entity_description = entity_description
         # POPRAWKA UNIKALNOŚCI: Łączymy MAC z kluczem encji
         # Gwarantuje unikalność w przypadku wielu urządzeń Acond

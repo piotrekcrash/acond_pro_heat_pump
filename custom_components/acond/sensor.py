@@ -116,7 +116,7 @@ class AcondProSensor(AcondProEntity, SensorEntity):
         entity_description: SensorEntityDescription,
     ) -> None:
         """Initialize the sensor class."""
-        super().__init__(coordinator)
+        super().__init__(coordinator, "Heat Pump")
         mac = coordinator.config_entry.data.get(CONF_MAC, "unknown_mac")
         self.entity_description = entity_description
         self._attr_unique_id = f"{mac}_{entity_description.key}"
