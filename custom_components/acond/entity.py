@@ -75,6 +75,7 @@ class AcondWaterHeaterEntityDescription(
     """Hybrid for water heater."""
 
 
+@dataclass(frozen=True, kw_only=True)
 class AcondSwitchEntityDescription(SwitchEntityDescription, AcondBaseDescription):
     """Hybrid for a switch."""
 
