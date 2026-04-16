@@ -23,10 +23,7 @@ class AcondProEntity(CoordinatorEntity[AcondDataUpdateCoordinator]):
     _attr_attribution = ATTRIBUTION
 
     def __init__(
-        self,
-        coordinator: AcondDataUpdateCoordinator,
-        device_name: str,
-        device_key: str
+        self, coordinator: AcondDataUpdateCoordinator, device_name: str, device_key: str
     ) -> None:
         """Initialize."""
         super().__init__(coordinator)
@@ -68,20 +65,22 @@ class AcondBinarySensorEntityDescription(
 ):
     """Hybrid for binary sensor."""
 
+
 @dataclass(frozen=True, kw_only=True)
 class AcondWaterHeaterEntityDescription(
     WaterHeaterEntityDescription, AcondBaseDescription
 ):
     """Hybrid for water heater."""
 
+
 class AcondSwitchEntityDescription(BinarySensorEntityDescription, AcondBaseDescription):
     """Hybrid for a switch."""
 
+
 @dataclass(frozen=True, kw_only=True)
-class AcondSelectEntityDescription(
-    BinarySensorEntityDescription, AcondBaseDescription
-):
+class AcondSelectEntityDescription(BinarySensorEntityDescription, AcondBaseDescription):
     """Hybrid for select."""
+
 
 @dataclass(frozen=True, kw_only=True)
 class AcondClimateEntityDescription(ClimateEntityDescription, AcondBaseDescription):
