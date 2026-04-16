@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
+from homeassistant.const import CONF_MAC
 from homeassistant.exceptions import ConfigEntryAuthFailed
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
@@ -29,3 +30,7 @@ class AcondDataUpdateCoordinator(DataUpdateCoordinator):
             raise ConfigEntryAuthFailed(exception) from exception
         except AcondProApiClientError as exception:
             raise UpdateFailed(exception) from exception
+
+    async def get_mac(self) -> str:
+        """Return device unique MAC address."""
+        return self.config_entry.data.get(CONF_MAC, "unknown_mac")
