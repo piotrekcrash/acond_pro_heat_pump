@@ -9,7 +9,6 @@ from homeassistant.components.binary_sensor import (
     BinarySensorEntity,
     BinarySensorEntityDescription,
 )
-from homeassistant.const import CONF_MAC
 
 from . import const
 from .entity import AcondProEntity
