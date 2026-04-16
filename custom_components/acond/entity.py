@@ -6,7 +6,9 @@ from dataclasses import dataclass
 
 from homeassistant.components.binary_sensor import BinarySensorEntityDescription
 from homeassistant.components.climate import ClimateEntityDescription
+from homeassistant.components.select import SelectEntityDescription
 from homeassistant.components.sensor import SensorEntityDescription
+from homeassistant.components.switch import SwitchEntityDescription
 from homeassistant.components.water_heater import WaterHeaterEntityDescription
 from homeassistant.const import CONF_MAC
 from homeassistant.helpers.device_registry import DeviceInfo
@@ -73,12 +75,12 @@ class AcondWaterHeaterEntityDescription(
     """Hybrid for water heater."""
 
 
-class AcondSwitchEntityDescription(BinarySensorEntityDescription, AcondBaseDescription):
+class AcondSwitchEntityDescription(SwitchEntityDescription, AcondBaseDescription):
     """Hybrid for a switch."""
 
 
 @dataclass(frozen=True, kw_only=True)
-class AcondSelectEntityDescription(BinarySensorEntityDescription, AcondBaseDescription):
+class AcondSelectEntityDescription(SelectEntityDescription, AcondBaseDescription):
     """Hybrid for select."""
 
 
