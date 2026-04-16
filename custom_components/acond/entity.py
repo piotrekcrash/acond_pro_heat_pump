@@ -26,6 +26,7 @@ class AcondProEntity(CoordinatorEntity[AcondDataUpdateCoordinator]):
                 (
                     coordinator.config_entry.domain,
                     coordinator.config_entry.data[CONF_MAC],
+                    device_name,
                 ),
             },
             name=device_name,
