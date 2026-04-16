@@ -15,11 +15,7 @@ class AcondProEntity(CoordinatorEntity[AcondDataUpdateCoordinator]):
 
     _attr_attribution = ATTRIBUTION
 
-    def __init__(
-            self,
-            coordinator: AcondDataUpdateCoordinator,
-            device_name: str
-            ) -> None:
+    def __init__(self, coordinator: AcondDataUpdateCoordinator) -> None:
         """Initialize."""
         super().__init__(coordinator)
         self._attr_has_entity_name = True
@@ -27,10 +23,10 @@ class AcondProEntity(CoordinatorEntity[AcondDataUpdateCoordinator]):
             identifiers={
                 (
                     coordinator.config_entry.domain,
-                    f"{coordinator.get_mac()}_{device_name}",
+                    coordinator.config_entry.data[CONF_MAC],
                 ),
             },
-            name=device_name,
+            name="Heat Pump",
             model="Acond Pro",
             manufacturer="Acond",
         )

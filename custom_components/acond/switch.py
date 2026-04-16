@@ -48,7 +48,7 @@ class AcondProSwitch(AcondProEntity, SwitchEntity):
         entity_description: SwitchEntityDescription,
     ) -> None:
         """Initialize the switch class."""
-        super().__init__(coordinator, "Heating")
+        super().__init__(coordinator)
         self.entity_description = entity_description
         self._attr_unique_id = entity_description.key
 
